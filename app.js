@@ -5,7 +5,7 @@ const client = new Discord.Client();
 var prefix = '?';
 
 client.on("message", message => {
-    if (message.author.bot === false) {
+    if (message.author.bot === false && message.channel.name.indexOf('archive') == -1) {
         client.guilds.forEach(function(element) {
             if (element.name != message.guild.name) {
                 element.channels.forEach(function(element2) {
