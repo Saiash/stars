@@ -21,7 +21,7 @@ client.on("message", message => {
         });
     }
 })
-client.login("NTE3NjU0ODMxNTkxMDYzNTYz.DuL5IA.NKA6zzIUAQN7UmBYEJl4fna4fCs");
+//client.login("NTE3NjU0ODMxNTkxMDYzNTYz.DuL5IA.NKA6zzIUAQN7UmBYEJl4fna4fCs");
 
 const http = require('http');
 const express = require('express');
