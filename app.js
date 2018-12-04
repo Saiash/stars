@@ -5,6 +5,21 @@ const client = new Discord.Client();
 var prefix = '?';
 
 client.on("message", message => {
+    var text;
+    if  (message.content == "!Тарха" || message.content == "!тарха") {
+      text = 'Скорость: 4 Хиты: 6/10 Выносливость: 0/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2';
+    }
+  if  (message.content == "!Аврик" || message.content == "!аврик") {
+      text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:2 Воля:4 Знание:3 Восприятие:2.';
+    }
+  if  (message.content == "!Джайн" || message.content == "!джайн") {
+      text = 'Скорость: 5 Хиты:8 Выносливость:5 Защита: серый. Сила:2 Воля:2 Знание:3 Восприятие:4.';
+    }
+  if  (message.content == "!Синдраэль" || message.content == "!синдраэль") {
+      text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:4 Воля:2 Знание:3 Восприятие:2.';
+    }
+    message.channel.send(text);
+
     if (message.author.bot === false && message.channel.name.indexOf('archive') == -1) {
         client.guilds.forEach(function(element) {
             if (element.name != message.guild.name) {
@@ -21,7 +36,7 @@ client.on("message", message => {
         });
     }
 })
-//client.login("NTE3NjU0ODMxNTkxMDYzNTYz.DuL5IA.NKA6zzIUAQN7UmBYEJl4fna4fCs");
+client.login("NTE5NjE3MzU5MzQyOTkzNDA5.Duh7Wg.-KJ5LDzazUJcBkFyEHSYkjaBxkI");
 
 const http = require('http');
 const express = require('express');
