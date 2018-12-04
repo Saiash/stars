@@ -18,9 +18,17 @@ client.on("message", message => {
   if  (message.content == "!Синдраэль" || message.content == "!синдраэль") {
       text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:4 Воля:2 Знание:3 Восприятие:2.';
     }
-  if (message.content[0]== "!" && message.content[1]== "с") {
-        
-        text = Math.floor(Math.random() * (6 - 1)) + 1 + message.content[0];
+  if (message.content[0]== "!" && message.content.indexOf('серый') != -1) {
+      var count;
+        count = message.content.split("серый").length - 1;
+    text = ""
+    while (count > 0) {
+      text += Math.floor(Math.random() * (6 - 1)) + 1;
+      count--;
+      if (count != 0 ) {
+        text += " и ";
+      }
+    }
       }
     message.channel.send(text);
 
