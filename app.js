@@ -18,6 +18,10 @@ client.on("message", message => {
   if  (message.content == "!Синдраэль" || message.content == "!синдраэль") {
       text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:4 Воля:2 Знание:3 Восприятие:2.';
     }
+  if (message.content[0]== "!" && message.content[1]== "с") {
+        
+        text = Math.floor(Math.random() * (6 - 1)) + 1 + message.content[0];
+      }
     message.channel.send(text);
 
     if (message.author.bot === false && message.channel.name.indexOf('archive') == -1) {
