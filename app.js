@@ -192,16 +192,16 @@ client.on("message", message => {
         text += ', запалов: **' + roll_res.spec + "**";
       }
       if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1 || message.content.indexOf('! тарха') != -1 || message.content.indexOf('! Тарха') != -1) {
-        if (message.content.indexOf('хп+') != -1) {
-          value = message.content.split('хп+')[1];
+        if (message.content.indexOf('урон+') != -1) {
+          value = message.content.split('урон+')[1];
           value = value.split(',')[0];
           heroes.tarha.hp += value*1;
-        } else if (message.content.indexOf('хп-') != -1) {
-          value = message.content.split('хп-')[1];
+        } else if (message.content.indexOf('урон-') != -1) {
+          value = message.content.split('урон-')[1];
           value = value.split(',')[0];
           heroes.tarha.hp += value*-1;
-        } else if (message.content.indexOf('хп=') != -1) {
-          value = message.content.split('хп=')[1];
+        } else if (message.content.indexOf('урон=') != -1) {
+          value = message.content.split('урон=')[1];
           value = value.split(',')[0];
           heroes.tarha.hp = value*1;
         }
@@ -228,16 +228,16 @@ client.on("message", message => {
         }
       }
       if (message.content.indexOf('!Аврик') != -1 || message.content.indexOf('!аврик') != -1 || message.content.indexOf('! Аврик') != -1 || message.content.indexOf('! аврик') != -1) {
-        if (message.content.indexOf('хп+') != -1) {
-          value = message.content.split('хп+')[1];
+        if (message.content.indexOf('урон+') != -1) {
+          value = message.content.split('урон+')[1];
           value = value.split(',')[0];
           heroes.avrik.hp += value*1;
-        } else if (message.content.indexOf('хп-') != -1) {
-          value = message.content.split('хп-')[1];
+        } else if (message.content.indexOf('урон-') != -1) {
+          value = message.content.split('урон-')[1];
           value = value.split(',')[0];
           heroes.avrik.hp += value*-1;
-        } else if (message.content.indexOf('хп=') != -1) {
-          value = message.content.split('хп=')[1];
+        } else if (message.content.indexOf('урон=') != -1) {
+          value = message.content.split('урон=')[1];
           value = value.split(',')[0];
           heroes.avrik.hp = value*1;
         }
@@ -264,16 +264,16 @@ client.on("message", message => {
         }
       }
       if (message.content.indexOf('!Джайн') != -1 || message.content.indexOf('!джайн') != -1 || message.content.indexOf('! Джайн') != -1 || message.content.indexOf('! джайн') != -1) {
-        if (message.content.indexOf('хп+') != -1) {
-          value = message.content.split('хп+')[1];
+        if (message.content.indexOf('урон+') != -1) {
+          value = message.content.split('урон+')[1];
           value = value.split(',')[0];
           heroes.jena.hp += value*1;
-        } else if (message.content.indexOf('хп-') != -1) {
-          value = message.content.split('хп-')[1];
+        } else if (message.content.indexOf('урон-') != -1) {
+          value = message.content.split('урон-')[1];
           value = value.split(',')[0];
           heroes.jena.hp += value*-1;
-        } else if (message.content.indexOf('хп=') != -1) {
-          value = message.content.split('хп=')[1];
+        } else if (message.content.indexOf('урон=') != -1) {
+          value = message.content.split('урон=')[1];
           heroes.jena.hp = value*1;
         }
         if (message.content.indexOf('усталость+') != -1) {
@@ -300,16 +300,16 @@ client.on("message", message => {
         }
       }
       if  (message.content.indexOf('!Синдраэль') != -1 || message.content.indexOf('!синдраэль') != -1 || message.content.indexOf('! Синдраэль') != -1 || message.content.indexOf('! синдраэль') != -1 || message.content.indexOf('!Син') != -1 || message.content.indexOf('!син') != -1 || message.content.indexOf('! Син') != -1 || message.content.indexOf('! син') != -1) {
-        if (message.content.indexOf('хп+') != -1) {
-          value = message.content.split('хп+')[1];
+        if (message.content.indexOf('урон+') != -1) {
+          value = message.content.split('урон+')[1];
           value = value.split(',')[0];
           heroes.sin.hp += value*1;
-        } else if (message.content.indexOf('хп-') != -1) {
-          value = message.content.split('хп-')[1];
+        } else if (message.content.indexOf('урон-') != -1) {
+          value = message.content.split('урон-')[1];
           value = value.split(',')[0];
           heroes.sin.hp += value*-1;
-        } else if (message.content.indexOf('хп=') != -1) {
-          value = message.content.split('хп=')[1];
+        } else if (message.content.indexOf('урон=') != -1) {
+          value = message.content.split('урон=')[1];
           value = value.split(',')[0];
           heroes.sin.hp = value*1;
         }
