@@ -222,7 +222,7 @@ client.on("message", message => {
           value = message.content.split('эффект=')[1];
           heroes.tarha.status = value;
         }
-        text = 'Скорость: 4 Хиты: '+heroes.tarha.hp+'/10 Выносливость: '+heroes.tarha.fatig+'/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
+        text = 'Тарха: Хиты: **'+heroes.tarha.hp+'/10** Выносливость: **'+heroes.tarha.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
         if (heroes.tarha.status != "") {
           text += ' Особые эффекты: ' + heroes.tarha.status;
         }
@@ -258,7 +258,7 @@ client.on("message", message => {
           value = message.content.split('эффект=')[1];
           heroes.avrik.status = value;
         }
-        text = 'Скорость: 4 Хиты: '+heroes.avrik.hp+'/12 Выносливость: '+heroes.avrik.fatig+'/4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
+        text = 'Аврик: Хиты: **'+heroes.avrik.hp+'/12** Выносливость: **'+heroes.avrik.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
         if (heroes.avrik.status != "") {
           text += ' Особые эффекты: ' + heroes.avrik.status;
         }
@@ -294,7 +294,7 @@ client.on("message", message => {
           value = value.split(',')[0];
           heroes.jena.status = value;
         }
-        text = 'Скорость: 5 Хиты: '+heroes.jena.hp+'/8 Выносливость: '+heroes.jena.fatig+'/5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
+        text = 'Джайн: Хиты: **'+heroes.jena.hp+'/8** Выносливость: **'+heroes.jena.fatig+'/5**, Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
         if (heroes.jena.status != "") {
           text += ' Особые эффекты: ' + heroes.jena.status;
         }
@@ -330,13 +330,49 @@ client.on("message", message => {
           value = message.content.split('эффект=')[1];
           heroes.sin.status = value;
         }
-        text = 'Скорость: 4 Хиты: '+heroes.sin.hp+'/12 Выносливость: '+heroes.sin.fatig+'/4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
+        text = 'Синдраэль: Хиты: **'+heroes.sin.hp+'/12** Выносливость: **'+heroes.sin.fatig+'/4**, Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
         if (heroes.sin.status != "") {
           text += ' Особые эффекты: ' + heroes.sin.status;
         }
       }
       if (message.content == '!статистика') {
         text = "1:"+statistic[1]+", 2:"+statistic[2]+", 3:"+statistic[3]+", 4:"+statistic[4]+", 5:"+statistic[5]+", 6:"+statistic[6];
+      }
+      if (message.content == '!обнулить') {
+        heroes.tarha = {};
+        heroes.tarha.fatig = 0;
+        heroes.tarha.hp = 10;
+        heroes.tarha.status = "";
+        heroes.avrik = {};
+        heroes.avrik.fatig = 0;
+        heroes.avrik.hp = 12;
+        heroes.avrik.status = "";
+        heroes.jena = {};
+        heroes.jena.fatig = 0;
+        heroes.jena.hp = 8;
+        heroes.jena.status = "";
+        heroes.sin = {};
+        heroes.sin.fatig = 0;
+        heroes.sin.hp = 12;
+        heroes.sin.status = "";
+      }
+      if (message.content == '!герои') {
+        text = 'Тарха: Хиты: **'+heroes.tarha.hp+'/10** Выносливость: **'+heroes.tarha.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
+        if (heroes.tarha.status != "") {
+          text += ' Особые эффекты: ' + heroes.tarha.status;
+        }
+         text += "\r\nАврик: Хиты: **"+heroes.avrik.hp+'/12** Выносливость: **'+heroes.avrik.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
+        if (heroes.avrik.status != "") {
+          text += ' Особые эффекты: ' + heroes.avrik.status;
+        }
+        text += "\r\nДжайн: Хиты: **"+heroes.jena.hp+'/8** Выносливость: **'+heroes.jena.fatig+'/5**, Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
+        if (heroes.jena.status != "") {
+          text += ' Особые эффекты: ' + heroes.jena.status;
+        }
+        text += "\r\nСиндраэль: Хиты: **"+heroes.sin.hp+'/12** Выносливость: **'+heroes.sin.fatig+'/4**, Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
+        if (heroes.sin.status != "") {
+          text += ' Особые эффекты: ' + heroes.sin.status;
+        }
       }
       message.channel.send(text);
     }
