@@ -14,6 +14,12 @@ dices.red = ["","1 повр","2 повр","2 повр","2 повр","3 повр"
 dices.brown = ["",0,0,0,1,1,2];
 dices.grey = ["",0,1,1,1,2,3];
 dices.black = ["",0,2,2,2,3,4];
+var heroes;
+var value;
+heroes = {};
+heroes.tarha = {};
+heroes.tarha.fatig = 0;
+heroes.tarha.hp = 0;
 
 
 client.on("message", message => {
@@ -108,11 +114,22 @@ client.on("message", message => {
       if (def != 0) {
         text += ', всего защиты: **' + def + "**";
       }
+      if  (message.content.indexOf('тарха') != -1 || message.content.indexOf('Тарха') != -1) {
+        if (message.content.indexOf('хп+') != -1) {
+          value = message.content.split('хп+')[1];
+          heroes.tarha.hp += value*1;
+        } else if (message.content.indexOf('хп-') != -1) {
+          value = message.content.split('хп-')[1];
+          heroes.tarha.hp += value*-1;
+        } else if (message.content.indexOf('хп=') != -1) {
+          value = message.content.split('хп=')[1];
+          heroes.tarha.hp = value*1;
+        }
+        text = 'Скорость: 4 Хиты: '+heroes.tarha.hp+'/10 Выносливость: '+heroes.tarha.fatig+'/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2';
+      }
       message.channel.send(text);
     }
-    if  (message.content == "!Тарха" || message.content == "!тарха") {
-      text = 'Скорость: 4 Хиты: 6/10 Выносливость: 0/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2';
-    }
+    
   if  (message.content == "!Аврик" || message.content == "!аврик") {
       text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:2 Воля:4 Знание:3 Восприятие:2.';
     }
