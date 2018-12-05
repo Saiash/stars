@@ -142,6 +142,7 @@ client.on("message", message => {
           heroes.tarha.hp += value*-1;
         } else if (message.content.indexOf('хп=') != -1) {
           value = message.content.split('хп=')[1];
+          value = value.split(',')[0];
           heroes.tarha.hp = value*1;
         }
         if (message.content.indexOf('усталость+') != -1) {
@@ -177,6 +178,7 @@ client.on("message", message => {
           heroes.avrik.hp += value*-1;
         } else if (message.content.indexOf('хп=') != -1) {
           value = message.content.split('хп=')[1];
+          value = value.split(',')[0];
           heroes.avrik.hp = value*1;
         }
         if (message.content.indexOf('усталость+') != -1) {
@@ -229,6 +231,7 @@ client.on("message", message => {
         }
         if (message.content.indexOf('эффект=') != -1) {
           value = message.content.split('эффект=')[1];
+          value = value.split(',')[0];
           heroes.jena.status = value;
         }
         text = 'Скорость: 5 Хиты: '+heroes.jena.hp+'/8 Выносливость: '+heroes.jena.fatig+'/5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
@@ -247,6 +250,7 @@ client.on("message", message => {
           heroes.sin.hp += value*-1;
         } else if (message.content.indexOf('хп=') != -1) {
           value = message.content.split('хп=')[1];
+          value = value.split(',')[0];
           heroes.sin.hp = value*1;
         }
         if (message.content.indexOf('усталость+') != -1) {
