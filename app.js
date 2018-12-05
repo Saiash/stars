@@ -8,6 +8,7 @@ var count;
 var dices;
 var def;
 var roll_res;
+var temp_text;
 roll_res = {}
 dices = {};
 dices.blue = ["","промах",{dist:2,dmg:2,spec:1},{dist:3,dmg:2},{dist:4,dmg:2},{dist:5,dmg:1},{dist:6,dmg:1,spec:1}];
