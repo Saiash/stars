@@ -9,6 +9,8 @@ var dices;
 var def;
 var roll_res;
 var temp_text;
+var statistic;
+statistic = [0,0,0,0,0,0,0];
 roll_res = {}
 dices = {};
 dices.blue = ["",{},{dist:2,dmg:2,spec:1},{dist:3,dmg:2,spec:0},{dist:4,dmg:2,spec:0},{dist:5,dmg:1,spec:0},{dist:6,dmg:1,spec:1}];
@@ -50,6 +52,7 @@ client.on("message", message => {
         while (count > 0) {
           temp_text = "";
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           roll_res.dmg += dices.blue[roll].dmg;
           roll_res.dist += dices.blue[roll].dist;
           roll_res.spec += dices.blue[roll].spec;
@@ -80,6 +83,7 @@ client.on("message", message => {
         while (count > 0) {
           temp_text = "";
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           roll_res.dmg += dices.yellow[roll].dmg;
           roll_res.dist += dices.yellow[roll].dist;
           roll_res.spec += dices.yellow[roll].spec;
@@ -107,6 +111,7 @@ client.on("message", message => {
         while (count > 0) {
           temp_text = "";
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           roll_res.dmg += dices.red[roll].dmg;
           roll_res.dist += dices.red[roll].dist;
           roll_res.spec += dices.red[roll].spec;
@@ -133,6 +138,7 @@ client.on("message", message => {
         count = message.content.split("коричневый").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           text += "коричневый: "+roll + " (**"+ dices.brown[roll] +" защиты**)";
           def += dices.brown[roll];
           count--;
@@ -148,6 +154,7 @@ client.on("message", message => {
         count = message.content.split("серый").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           text += "серый: "+roll + " (**"+ dices.grey[roll] +" защиты**)";
           count--;          
           def += dices.grey[roll];
@@ -163,6 +170,7 @@ client.on("message", message => {
         count = message.content.split("черный").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          statistic[roll]++;
           text += "черный: "+roll + " (**"+ dices.black[roll] +" защиты**)";
           count--;
           def += dices.black[roll];
@@ -177,7 +185,9 @@ client.on("message", message => {
       if (roll_res.dmg >= 1) {
         text += "\r\nРезультаты броска: урона: **" + roll_res.dmg + "**";
       }
-      
+      if (roll_res.dist >= 1) {
+        text += ', дистанция: **' + roll_res.dist + "**";
+      }
       if (roll_res.spec >= 1) {
         text += ', запалов: **' + roll_res.spec + "**";
       }
@@ -324,6 +334,9 @@ client.on("message", message => {
         if (heroes.sin.status != "") {
           text += ' Особые эффекты: ' + heroes.sin.status;
         }
+      }
+      if (message.content == '!статистика') {
+        text = "1:"+statistic[1]+", 2:"+statistic[2]+", 3:"+statistic[3]+", 4:"+statistic[4]+", 5:"+statistic[5]+", 6:"+statistic[6];
       }
       message.channel.send(text);
     }
