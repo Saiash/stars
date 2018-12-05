@@ -6,19 +6,21 @@ var prefix = '?';
 var roll;
 var count;
 var dices;
+var def;
 dices = {};
 dices.blue = ["","промах","2 дист, 2 повр, запал","3 дист, 2 повр","4 дист, 2 повр","5 дист, 1 повр","6 дист, 1 повр, запал"];
 dices.yellow = ["","1 дист, 1 повр","1 дист, 1 запал","2 повр, 1 запал","2 повр","1 повр, 1 запал","2 дист, 1 повр"];
 dices.red = ["","1 повр","2 повр","2 повр","2 повр","3 повр","3 повр, 1 запал"];
-dices.brown = ["","пусто","пусто","пусто","1 защита","1 защиты","2 защиты"];
-dices.grey = ["","пусто","1 защита","1 защита","1 защита","2 защиты","3 защиты"];
-dices.black = ["","пусто","2 защита","2 защита","2 защита","3 защиты","4 защиты"];
+dices.brown = ["",0,0,0,1,1,2];
+dices.grey = ["",0,1,1,1,2,3];
+dices.black = ["",0,2,2,2,3,4];
 
 
 client.on("message", message => {
     var text;
     if (message.content[0]== "!") {
       text = ""
+      def = 0;
       if (message.content.indexOf('синий') != -1) {
         count = message.content.split("синий").length - 1;
         while (count > 0) {
@@ -65,7 +67,8 @@ client.on("message", message => {
         count = message.content.split("коричневый").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          text += "коричневый: "+roll + " (**"+ dices.brown[roll] +"**)";
+          text += "коричневый: "+roll + " (**"+ dices.brown[roll] +" защиты**)";
+          def += dices.brown[roll];
           count--;
           if (count != 0 ) {
             text += " и ";
@@ -79,8 +82,9 @@ client.on("message", message => {
         count = message.content.split("серый").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          text += "серый: "+roll + " (**"+ dices.grey[roll] +"**)";
-          count--;
+          text += "серый: "+roll + " (**"+ dices.grey[roll] +" защиты**)";
+          count--;          
+          def += dices.grey[roll];
           if (count != 0 ) {
             text += " и ";
           }
@@ -93,15 +97,19 @@ client.on("message", message => {
         count = message.content.split("черный").length - 1;
         while (count > 0) {
           roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          text += "черный: "+roll + " (**"+ dices.black[roll] +"**)";
+          text += "черный: "+roll + " (**"+ dices.black[roll] +" защиты**)";
           count--;
+          def += dices.black[roll];
           if (count != 0 ) {
             text += " и ";
           }
         }  
       }
+      if (def != 0) {
+        text += ', всего защиты: **' + def + "**";
+      }
+      message.channel.send(text);
     }
-    message.channel.send(text);
     if  (message.content == "!Тарха" || message.content == "!тарха") {
       text = 'Скорость: 4 Хиты: 6/10 Выносливость: 0/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2';
     }
