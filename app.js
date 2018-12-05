@@ -20,7 +20,19 @@ heroes = {};
 heroes.tarha = {};
 heroes.tarha.fatig = 0;
 heroes.tarha.hp = 0;
-
+heroes.tarha.status = "";
+heroes.avrik = {};
+heroes.avrik.fatig = 0;
+heroes.avrik.hp = 0;
+heroes.avrik.status = "";
+heroes.jena = {};
+heroes.jena.fatig = 0;
+heroes.jena.hp = 0;
+heroes.jena.status = "";
+heroes.sin = {};
+heroes.sin.fatig = 0;
+heroes.sin.hp = 0;
+heroes.sin.status = "";
 
 client.on("message", message => {
     var text;
@@ -114,18 +126,40 @@ client.on("message", message => {
       if (def != 0) {
         text += ', всего защиты: **' + def + "**";
       }
-      if  (message.content.indexOf('тарха') != -1 || message.content.indexOf('Тарха') != -1) {
+      if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1) {
         if (message.content.indexOf('хп+') != -1) {
           value = message.content.split('хп+')[1];
+          value = value.split(',')[0];
           heroes.tarha.hp += value*1;
         } else if (message.content.indexOf('хп-') != -1) {
           value = message.content.split('хп-')[1];
+          value = value.split(',')[0];
           heroes.tarha.hp += value*-1;
         } else if (message.content.indexOf('хп=') != -1) {
           value = message.content.split('хп=')[1];
           heroes.tarha.hp = value*1;
         }
-        text = 'Скорость: 4 Хиты: '+heroes.tarha.hp+'/10 Выносливость: '+heroes.tarha.fatig+'/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2';
+        if (message.content.indexOf('усталость+') != -1) {
+          value = message.content.split('усталость+')[1];
+          value = value.split(',')[0];
+          heroes.tarha.fatig += value*1;
+        } else if (message.content.indexOf('усталость-') != -1) {
+          value = message.content.split('усталость-')[1];
+          value = value.split(',')[0];
+          heroes.tarha.fatig += value*-1;
+        } else if (message.content.indexOf('усталость=') != -1) {
+          value = message.content.split('усталость=')[1];
+          value = value.split(',')[0];
+          heroes.tarha.fatig = value*1;
+        }
+        if (message.content.indexOf('эффект=') != -1) {
+          value = message.content.split('эффект=')[1];
+          heroes.tarha.status = value;
+        }
+        text = 'Скорость: 4 Хиты: '+heroes.tarha.hp+'/10 Выносливость: '+heroes.tarha.fatig+'/4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
+        if (heroes.tarha.status != "") {
+          text += ' Особые эффекты: ' + heroes.tarha.status;
+        }
       }
       message.channel.send(text);
     }
