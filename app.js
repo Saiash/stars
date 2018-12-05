@@ -7,8 +7,10 @@ var roll;
 var count;
 var dices;
 var def;
+var roll_res;
+roll_res = {}
 dices = {};
-dices.blue = ["","промах","2 дист, 2 повр, запал","3 дист, 2 повр","4 дист, 2 повр","5 дист, 1 повр","6 дист, 1 повр, запал"];
+dices.blue = ["","промах",{dist:2,dmg:2,spec:1},{dist:3,dmg:2},{dist:4,dmg:2},{dist:5,dmg:1},{dist:6,dmg:1,spec:1}];
 dices.yellow = ["","1 дист, 1 повр","1 дист, 1 запал","2 повр, 1 запал","2 повр","1 повр, 1 запал","2 дист, 1 повр"];
 dices.red = ["","1 повр","2 повр","2 повр","2 повр","3 повр","3 повр, 1 запал"];
 dices.brown = ["",0,0,0,1,1,2];
@@ -19,19 +21,19 @@ var value;
 heroes = {};
 heroes.tarha = {};
 heroes.tarha.fatig = 0;
-heroes.tarha.hp = 0;
+heroes.tarha.hp = 10;
 heroes.tarha.status = "";
 heroes.avrik = {};
 heroes.avrik.fatig = 0;
-heroes.avrik.hp = 0;
+heroes.avrik.hp = 12;
 heroes.avrik.status = "";
 heroes.jena = {};
 heroes.jena.fatig = 0;
-heroes.jena.hp = 0;
+heroes.jena.hp = 8;
 heroes.jena.status = "";
 heroes.sin = {};
 heroes.sin.fatig = 0;
-heroes.sin.hp = 0;
+heroes.sin.hp = 12;
 heroes.sin.status = "";
 
 client.on("message", message => {
@@ -39,6 +41,9 @@ client.on("message", message => {
     if (message.content[0]== "!") {
       text = ""
       def = 0;
+      roll_res.dmg = 0;
+      roll_res.dist = 0;
+      roll_res.spec = 0;
       if (message.content.indexOf('синий') != -1) {
         count = message.content.split("синий").length - 1;
         while (count > 0) {
@@ -161,17 +166,112 @@ client.on("message", message => {
           text += ' Особые эффекты: ' + heroes.tarha.status;
         }
       }
+      if  (message.content.indexOf('!Аврик') != -1 || message.content.indexOf('!аврик') != -1) {
+        if (message.content.indexOf('хп+') != -1) {
+          value = message.content.split('хп+')[1];
+          value = value.split(',')[0];
+          heroes.avrik.hp += value*1;
+        } else if (message.content.indexOf('хп-') != -1) {
+          value = message.content.split('хп-')[1];
+          value = value.split(',')[0];
+          heroes.avrik.hp += value*-1;
+        } else if (message.content.indexOf('хп=') != -1) {
+          value = message.content.split('хп=')[1];
+          heroes.avrik.hp = value*1;
+        }
+        if (message.content.indexOf('усталость+') != -1) {
+          value = message.content.split('усталость+')[1];
+          value = value.split(',')[0];
+          heroes.avrik.fatig += value*1;
+        } else if (message.content.indexOf('усталость-') != -1) {
+          value = message.content.split('усталость-')[1];
+          value = value.split(',')[0];
+          heroes.avrik.fatig += value*-1;
+        } else if (message.content.indexOf('усталость=') != -1) {
+          value = message.content.split('усталость=')[1];
+          value = value.split(',')[0];
+          heroes.avrik.fatig = value*1;
+        }
+        if (message.content.indexOf('эффект=') != -1) {
+          value = message.content.split('эффект=')[1];
+          heroes.avrik.status = value;
+        }
+        text = 'Скорость: 4 Хиты: '+heroes.avrik.hp+'/12 Выносливость: '+heroes.avrik.fatig+'/4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
+        if (heroes.avrik.status != "") {
+          text += ' Особые эффекты: ' + heroes.avrik.status;
+        }
+      }
+      if  (message.content.indexOf('!Джайн') != -1 || message.content.indexOf('!джайн') != -1) {
+        if (message.content.indexOf('хп+') != -1) {
+          value = message.content.split('хп+')[1];
+          value = value.split(',')[0];
+          heroes.jena.hp += value*1;
+        } else if (message.content.indexOf('хп-') != -1) {
+          value = message.content.split('хп-')[1];
+          value = value.split(',')[0];
+          heroes.jena.hp += value*-1;
+        } else if (message.content.indexOf('хп=') != -1) {
+          value = message.content.split('хп=')[1];
+          heroes.jena.hp = value*1;
+        }
+        if (message.content.indexOf('усталость+') != -1) {
+          value = message.content.split('усталость+')[1];
+          value = value.split(',')[0];
+          heroes.jena.fatig += value*1;
+        } else if (message.content.indexOf('усталость-') != -1) {
+          value = message.content.split('усталость-')[1];
+          value = value.split(',')[0];
+          heroes.jena.fatig += value*-1;
+        } else if (message.content.indexOf('усталость=') != -1) {
+          value = message.content.split('усталость=')[1];
+          value = value.split(',')[0];
+          heroes.jena.fatig = value*1;
+        }
+        if (message.content.indexOf('эффект=') != -1) {
+          value = message.content.split('эффект=')[1];
+          heroes.jena.status = value;
+        }
+        text = 'Скорость: 5 Хиты: '+heroes.jena.hp+'/8 Выносливость: '+heroes.jena.fatig+'/5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
+        if (heroes.jena.status != "") {
+          text += ' Особые эффекты: ' + heroes.jena.status;
+        }
+      }
+      if  (message.content.indexOf('!Синдраэль') != -1 || message.content.indexOf('!синдраэль') != -1) {
+        if (message.content.indexOf('хп+') != -1) {
+          value = message.content.split('хп+')[1];
+          value = value.split(',')[0];
+          heroes.sin.hp += value*1;
+        } else if (message.content.indexOf('хп-') != -1) {
+          value = message.content.split('хп-')[1];
+          value = value.split(',')[0];
+          heroes.sin.hp += value*-1;
+        } else if (message.content.indexOf('хп=') != -1) {
+          value = message.content.split('хп=')[1];
+          heroes.sin.hp = value*1;
+        }
+        if (message.content.indexOf('усталость+') != -1) {
+          value = message.content.split('усталость+')[1];
+          value = value.split(',')[0];
+          heroes.sin.fatig += value*1;
+        } else if (message.content.indexOf('усталость-') != -1) {
+          value = message.content.split('усталость-')[1];
+          value = value.split(',')[0];
+          heroes.sin.fatig += value*-1;
+        } else if (message.content.indexOf('усталость=') != -1) {
+          value = message.content.split('усталость=')[1];
+          value = value.split(',')[0];
+          heroes.sin.fatig = value*1;
+        }
+        if (message.content.indexOf('эффект=') != -1) {
+          value = message.content.split('эффект=')[1];
+          heroes.sin.status = value;
+        }
+        text = 'Скорость: 4 Хиты: '+heroes.sin.hp+'/12 Выносливость: '+heroes.sin.fatig+'/4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
+        if (heroes.sin.status != "") {
+          text += ' Особые эффекты: ' + heroes.sin.status;
+        }
+      }
       message.channel.send(text);
-    }
-    
-  if  (message.content == "!Аврик" || message.content == "!аврик") {
-      text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:2 Воля:4 Знание:3 Восприятие:2.';
-    }
-  if  (message.content == "!Джайн" || message.content == "!джайн") {
-      text = 'Скорость: 5 Хиты:8 Выносливость:5 Защита: серый. Сила:2 Воля:2 Знание:3 Восприятие:4.';
-    }
-  if  (message.content == "!Синдраэль" || message.content == "!синдраэль") {
-      text = 'Скорость: 4 Хиты:12 Выносливость:4 Защита: серый. Сила:4 Воля:2 Знание:3 Восприятие:2.';
     }
 })
 client.login("NTE5NjE3MzU5MzQyOTkzNDA5.Duh7Wg.-KJ5LDzazUJcBkFyEHSYkjaBxkI");
