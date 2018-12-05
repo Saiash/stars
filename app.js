@@ -191,7 +191,7 @@ client.on("message", message => {
       if (roll_res.spec >= 1) {
         text += ', запалов: **' + roll_res.spec + "**";
       }
-      if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1) {
+      if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1 || message.content.indexOf('! тарха') != -1 || message.content.indexOf('! Тарха') != -1) {
         if (message.content.indexOf('хп+') != -1) {
           value = message.content.split('хп+')[1];
           value = value.split(',')[0];
@@ -227,7 +227,7 @@ client.on("message", message => {
           text += ' Особые эффекты: ' + heroes.tarha.status;
         }
       }
-      if  (message.content.indexOf('!Аврик') != -1 || message.content.indexOf('!аврик') != -1) {
+      if (message.content.indexOf('!Аврик') != -1 || message.content.indexOf('!аврик') != -1 || message.content.indexOf('! Аврик') != -1 || message.content.indexOf('! аврик') != -1) {
         if (message.content.indexOf('хп+') != -1) {
           value = message.content.split('хп+')[1];
           value = value.split(',')[0];
@@ -263,7 +263,7 @@ client.on("message", message => {
           text += ' Особые эффекты: ' + heroes.avrik.status;
         }
       }
-      if  (message.content.indexOf('!Джайн') != -1 || message.content.indexOf('!джайн') != -1) {
+      if (message.content.indexOf('!Джайн') != -1 || message.content.indexOf('!джайн') != -1 || message.content.indexOf('! Джайн') != -1 || message.content.indexOf('! джайн') != -1) {
         if (message.content.indexOf('хп+') != -1) {
           value = message.content.split('хп+')[1];
           value = value.split(',')[0];
@@ -299,7 +299,7 @@ client.on("message", message => {
           text += ' Особые эффекты: ' + heroes.jena.status;
         }
       }
-      if  (message.content.indexOf('!Синдраэль') != -1 || message.content.indexOf('!синдраэль') != -1) {
+      if  (message.content.indexOf('!Синдраэль') != -1 || message.content.indexOf('!синдраэль') != -1 || message.content.indexOf('! Синдраэль') != -1 || message.content.indexOf('! синдраэль') != -1 || message.content.indexOf('!Син') != -1 || message.content.indexOf('!син') != -1 || message.content.indexOf('! Син') != -1 || message.content.indexOf('! син') != -1) {
         if (message.content.indexOf('хп+') != -1) {
           value = message.content.split('хп+')[1];
           value = value.split(',')[0];
