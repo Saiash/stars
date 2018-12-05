@@ -11,9 +11,9 @@ var roll_res;
 var temp_text;
 roll_res = {}
 dices = {};
-dices.blue = ["",{},{dist:2,dmg:2,spec:1},{dist:3,dmg:2},{dist:4,dmg:2},{dist:5,dmg:1},{dist:6,dmg:1,spec:1}];
-dices.yellow = ["",{dist:1,dmg:1},{dist:1,spec:1},{dmg:2,spec:1},{dmg:2},{dmg:1,spec:1},{dist:2,dmg:1}];
-dices.red = ["",{dmg:1},{dmg:2},{dmg:2},{dmg:2},{dmg:3},{dmg:3,spec:1}];
+dices.blue = ["",{},{dist:2,dmg:2,spec:1},{dist:3,dmg:2,spec:0},{dist:4,dmg:2,spec:0},{dist:5,dmg:1,spec:0},{dist:6,dmg:1,spec:1}];
+dices.yellow = ["",{dist:1,dmg:1,spec:0},{dist:1,dmg:0,spec:1},{dist:0,dmg:2,spec:1},{dist:0,dmg:2,spec:0},{dist:0,dmg:1,spec:1},{dist:2,dmg:1,spec:0}];
+dices.red = ["",{dmg:1,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:3,dist:0, spec:0},{dmg:3,spec:1, dist:0}];
 dices.brown = ["",0,0,0,1,1,2];
 dices.grey = ["",0,1,1,1,2,3];
 dices.black = ["",0,2,2,2,3,4];
@@ -62,7 +62,9 @@ client.on("message", message => {
           if (dices.blue[roll].spec >= 1) {
             temp_text += " запалы " + dices.blue[roll].spec;
           }
-          IF 
+          if (temp_text == "") {
+            temp_text = 'ПРОМАХ';
+          }
           text += "синий: "+roll + " (**"+ temp_text +"**)";
           count--;
           if (count != 0 ) {
@@ -71,6 +73,9 @@ client.on("message", message => {
         }  
       }
       if (message.content.indexOf('желтый') != -1) {
+        if (text != "") {
+          text += ", ";
+        }
         count = message.content.split("желтый").length - 1;
         while (count > 0) {
           temp_text = "";
@@ -95,6 +100,9 @@ client.on("message", message => {
         }  
       }
       if (message.content.indexOf('красный') != -1) {
+        if (text != "") {
+          text += ", ";
+        }
         count = message.content.split("красный").length - 1;
         while (count > 0) {
           temp_text = "";
@@ -167,13 +175,11 @@ client.on("message", message => {
         text += ', всего защиты: **' + def + "**";
       }
       if (roll_res.dmg >= 1) {
-        text += ', всего урона: **' + roll_res.dmg + "**";
+        text += "\r\nРезультаты броска: урона: **" + roll_res.dmg + "**";
       }
-      if (roll_res.dist >= 1) {
-        text += ', всего дистанции: **' + roll_res.dist + "**";
-      }
+      
       if (roll_res.spec >= 1) {
-        text += ', всего запалов: **' + roll_res.spec + "**";
+        text += ', запалов: **' + roll_res.spec + "**";
       }
       if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1) {
         if (message.content.indexOf('хп+') != -1) {
