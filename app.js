@@ -42,31 +42,8 @@ client.on("message", message => {
             var price = [0,0];
             var pices = message.content.split('/');
             var components = [];
-            pices[1] = pices[1].split('-');
-            count = pices[1].length - 1;
-            var i = 0;
-            components[0] = [];
-            while (i <= count) {
-              components[0][i] = pices[1][i].split(':');
-              price[0] += pricecalc(components[0][i][0],components[0][i][1],pices[3],pices[4]);
-              var j = 0;
-              var realcount = 0;
-              while (j < i) {
-                realcount += components[0][i][j];
-                j++;
-              }
-              i++;
-            }
-          
-            pices[2] = pices[2].split('-');
-            count = pices[2].length - 1;
-            var i = 0;
-            components[1] = [];
-            while (i <= count) {
-              components[1][i] = pices[2][i].split(':');
-              price[1] = pricecalc(components[1][i][0],components[1][i][1],pices[3],pices[4]);
-              i++;
-            }
+            price[0] = multipricecalc(pices[1],pices[3],pices[4]);
+            price[1] = multipricecalc(pices[2],pices[3],pices[4]);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
         }
       
@@ -91,4 +68,28 @@ var incomecalc = function (tech,count,mod,type) {
       income = Math.round(Math.pow((count+tech)*(0.7+mod/14)+1,1.6+(tech)/8));
     }
     return income;
+}
+
+var multipricecalc = function(string,mod,type) {
+    string = string.split('-');
+    var count = string.length - 1;
+    var i = 0;
+    var components = [];
+    components[0] = [];
+    var price = 0;
+    while (i <= count) {
+        components[0][i] = string[i].split(':');
+        var j = 0;
+        var realcount = 0;
+        while (j <= i) {
+            realcount += components[0][j][1]*1;
+            j++;
+        }
+        price += pricecalc(components[0][i][0]*1,realcount,mod*1,type*1);
+        if (realcount != components[0][i][1]*1) {
+            price += -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
+        }
+        i++;
+    }
+  return price;
 }
