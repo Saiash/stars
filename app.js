@@ -42,14 +42,14 @@ client.on("message", message => {
             var price = 0;
             var pices = message.content.split('/');
             pices[1] = pices[1].split('-');
-            count = pices[1]юlength - 1;
+            count = pices[1].length;
             var i = 0;
             while (i <= count) {
               var components = pices[1][i].split(':');
               price = pricecalc(components[0],components[1],pices[3],pices[4]);
               i++;
             }
-            text = price;
+            text = count;
         }
       
         if (text != '') {
