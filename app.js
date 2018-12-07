@@ -51,6 +51,7 @@ var ThrowDice = function (message,roll_res,text,type,name) {
         roll_res.dmg += dices[type][roll].dmg;
         roll_res.dist += dices[type][roll].dist;
         roll_res.spec += dices[type][roll].spec;
+        roll_res.def += dices[type][roll].def;
         if (dices[type][roll].dmg >= 1) {
           temp_text += " урон " + dices[type][roll].dmg;
         }
@@ -115,7 +116,7 @@ client.on("message", message => {
           text = result[0];   
       }
       if (roll_res.def >= 0) {
-        text += '\r\nВсего защиты: **' + def + "**";
+        text += '\r\nВсего защиты: **' + roll_res.def + "**";
       }
       if (roll_res.dmg >= 1) {
         text += "\r\nРезультаты броска: урона: **" + roll_res.dmg + "**";
