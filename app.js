@@ -42,8 +42,8 @@ client.on("message", message => {
             var price = [0,0];
             var pices = message.content.split('/');
             var components = [];
-            price[0] = multipricecalc(pices[1],pices[3],pices[4]);
-            price[1] = multipricecalc(pices[2],pices[3],pices[4]);
+            price[0] = multipricecalc(pices[1],pices[3],pices[4],message);
+            price[1] = multipricecalc(pices[2],pices[3],pices[4],message);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
         }
       
@@ -70,7 +70,7 @@ var incomecalc = function (tech,count,mod,type) {
     return income;
 }
 
-var multipricecalc = function(string,mod,type) {
+var multipricecalc = function(string,mod,type,message) {
     string = string.split('-');
     var count = string.length - 1;
     var i = 0;
