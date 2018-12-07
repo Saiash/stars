@@ -39,6 +39,10 @@ heroes.sin.fatig = 0;
 heroes.sin.hp = 0;
 heroes.sin.status = "";
 
+var throwdice = function () {
+return "1234";
+}
+
 client.on("message", message => {
     var text;
     if (message.content[0]== "!") {
@@ -388,5 +392,5 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`https://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 220000);
