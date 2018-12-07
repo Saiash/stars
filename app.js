@@ -23,32 +23,34 @@ client.on("message", message => {
            text = "команды: !строительство\r\n!улучшение";
         }
         if (message.content == '!строительство') {
-            text = "Для рассчета стоимости постройки сообщение должно быть следующего формата: \r\n**!строительство /технология/количество/модификатор/тип**";
+            text = "Для рассчета стоимости постройки сообщение должно быть следующего формата: \r\n**!строительство /технология/количество/мод. строительства/мод. добычи/тип**";
         } else if (message.content.indexOf('!строительство') != -1) {
             var tech = message.content.split('/')[1]*1;
             var count = message.content.split('/')[2]*1;
-            var mod = message.content.split('/')[3]*1;
-            var type = message.content.split('/')[4]*1;
-            var price = pricecalc(tech,count,mod,type);
-            var income = Math.round(Math.pow((count+tech)*(0.7+mod/14)+1,1.6+(tech)/8));
+            var mod1 = message.content.split('/')[3]*1;
+            var mod2 = message.content.split('/')[4]*1;
+            var type = message.content.split('/')[5]*1;
+            var price = pricecalc(tech,count,mod1,type);
+            var income = incomecalc(tech,count,mod2,type);
             text = "Цена постройки: **"+price+"**";
             if (income >= 1) {
                 text += "\r\nДоход: **"+ income+"**";
             }
         }
         if (message.content == '!улучшение') {
-            text = "Для рассчета стоимости улучшения сообщение должно быть следующего формата: \r\n**!улучшение /технология:количество-/технология:количество-/модификатор/тип**";
+            text = "Для рассчета стоимости улучшения сообщение должно быть следующего формата: \r\n**!улучшение /технология:количество-/технология:количество-/мод. строительства/модификатор:новый модификатор/тип**\r\n!улучшение /0:0-0:0/0:0-0:0/0/0:0/1";
         } else if (message.content.indexOf('!улучшение') != -1) {
             var price = [0,0];
             var income = [0,0];
             var pices = message.content.split('/');
+            pices[4] = pices[4].split(':');
             var components = [];
             price[0] = multipricecalc(pices[1],pices[3],pices[4]);
-            income[0] = multiincomcalc(pices[1],pices[3],pices[4]);
+            income[0] = multiincomcalc(pices[1],pices[4][0],pices[4]);
             price[1] = multipricecalc(pices[2],pices[3],pices[4]);
-            income[1] = multiincomcalc(pices[2],pices[3],pices[4]);
+            income[1] = multiincomcalc(pices[2],pices[4][1],pices[4]);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
-            text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";
+            text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
       
         if (text != '') {
@@ -70,6 +72,9 @@ var incomecalc = function (tech,count,mod,type) {
     var income = 0;
     if (type == 1) {
       income = Math.round(Math.pow((count+tech)*(0.7+mod/14)+1,1.6+(tech)/8));
+    }
+    if (tech == 0 && count == 0) {
+      income = 0;
     }
     return income;
 }
@@ -112,10 +117,10 @@ var multiincomcalc = function(string,mod,type) {
         while (j <= i) {
             realcount += components[0][j][1]*1;
             j++;
-        }
-        income += incomecalc(components[0][i][0]*1,realcount,mod*1,type*1);
+        }     
+        income += incomecalc(components[0][i][0]*1,realcount,mod*1,type*1)*1;
         if (realcount != components[0][i][1]*1) {
-            income += -incomecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
+            income += -incomecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1)*1;
         }
         i++;
     }
