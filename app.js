@@ -17,5 +17,20 @@ setInterval(() => {
 }, 220000);
 
 client.on("message", message => {
-    if (message.content == "!строительство")
+    var text = "";
+    if (message.content == '!help') {
+       text = "команды: !строительство";
+    }
+    if (message.content == '!строительство') {
+        text = "Для рассчета сообщение должно быть следующего формата следующего формата: !строительство /технология/количество/модификатор/";
+    } else if (message.content.indexOf('!строительство') != -1) {
+        var price = 0;
+        var tech = message.content.split('/')[1];
+        var count = message.content.split('/')[2];
+        var mod = message.content.split('/')[3];
+        text = tech + " " + count + " " + mod;
+    }
+    if (text != '') {
+        message.channel.send(text);
+    }
 })
