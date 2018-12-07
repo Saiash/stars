@@ -39,6 +39,11 @@ heroes.jena = {hp:0,hpmax:8,fatig:0,fatigmax:5};
 heroes.jena.status = "";
 heroes.jena.stats = 'Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
 
+if (json != "") {
+    var json = fs.readFileSync('save.txt','utf8');
+    heroes = JSON.parse(json);
+}
+
 var ThrowDice = function (message,roll_res,text,type,name) {
     if (text != "") {
       text += ", ";
@@ -110,7 +115,16 @@ var EditHero = function(message,text,type,name) {
     if (heroes[type].status != "") {
         text += ' Особые эффекты: ' + heroes[type].status;
     }
+    save(heroes);
     return text;
+}
+var save = function(heroes) {
+  fs.writeFile("save.txt", JSON.stringify(heroes), function(err) {
+      if(err) {
+          return console.log(err);
+      }
+      console.log("The file was saved!");
+  }); 
 }
 
 client.on("message", message => {
@@ -195,22 +209,13 @@ client.on("message", message => {
           heroes.jena = {hp:0,hpmax:8,fatig:0,fatigmax:5};
           heroes.jena.status = "";
           heroes.jena.stats = 'Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
+          save(heroes);
       }
       if (message.content == '!герои') {
           text = EditHero(message,text,'tarha',"Тарха");
           text += "\r\n"+EditHero(message,text,'avrik',"Аврик");
           text += "\r\n"+EditHero(message,text,'jena',"Джайн");
           text += "\r\n"+EditHero(message,text,'sin',"Синдраэль");
-        fs.writeFile("save.txt", text, function(err) {
-            if(err) {
-                return console.log(err);
-            }
-
-            console.log("The file was saved!");
-        }); 
-      }
-      if (message.content == "!загрузить") {
-        text = fs.readFileSync('./save.txt');
       }
       message.channel.send(text);
     }
