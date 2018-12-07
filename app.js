@@ -39,17 +39,27 @@ client.on("message", message => {
         if (message.content == '!улучшение') {
             text = "Для рассчета стоимости улучшения сообщение должно быть следующего формата: \r\n**!улучшение /технология:количество-/технология:количество-/модификатор/тип**";
         } else if (message.content.indexOf('!улучшение') != -1) {
-            var price = 0;
+            var price = [0,0];
             var pices = message.content.split('/');
+          
             pices[1] = pices[1].split('-');
-            count = pices[1].length;
+            count = pices[1].length - 1;
             var i = 0;
             while (i <= count) {
               var components = pices[1][i].split(':');
-              price = pricecalc(components[0],components[1],pices[3],pices[4]);
+              price[0] = pricecalc(components[0],components[1],pices[3],pices[4]);
               i++;
             }
-            text = count;
+          
+            pices[2] = pices[2].split('-');
+            count = pices[2].length - 1;
+            var i = 0;
+            while (i <= count) {
+              var components = pices[2][i].split(':');
+              price[1] = pricecalc(components[0],components[1],pices[3],pices[4]);
+              i++;
+            }
+            text = "Стоимость: **" + price[1]*1 - price[0]*1) + "**";
         }
       
         if (text != '') {
