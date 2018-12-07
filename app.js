@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const fs = require('fs');
 
 // On déclare le préfixe
 var prefix = '?';
@@ -197,9 +198,19 @@ client.on("message", message => {
       }
       if (message.content == '!герои') {
           text = EditHero(message,text,'tarha',"Тарха");
-          text += EditHero(message,text,'avrik',"Аврик");
-          text += EditHero(message,text,'jena',"Джайн");
-          text += EditHero(message,text,'sin',"Синдраэль");
+          text += "\r\n"+EditHero(message,text,'avrik',"Аврик");
+          text += "\r\n"+EditHero(message,text,'jena',"Джайн");
+          text += "\r\n"+EditHero(message,text,'sin',"Синдраэль");
+        fs.writeFile("save.txt", text, function(err) {
+            if(err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
+        }); 
+      }
+      if (message.content == "!загрузить") {
+        text = fs.readFileSync('./save.txt');
       }
       message.channel.send(text);
     }
