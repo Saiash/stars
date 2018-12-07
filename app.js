@@ -41,25 +41,33 @@ client.on("message", message => {
         } else if (message.content.indexOf('!улучшение') != -1) {
             var price = [0,0];
             var pices = message.content.split('/');
-          
+            var components = [];
             pices[1] = pices[1].split('-');
             count = pices[1].length - 1;
             var i = 0;
+            components[0] = [];
             while (i <= count) {
-              var components = pices[1][i].split(':');
-              price[0] = pricecalc(components[0],components[1],pices[3],pices[4]);
+              components[0][i] = pices[1][i].split(':');
+              price[0] += pricecalc(components[0][i][0],components[0][i][1],pices[3],pices[4]);
+              var j = 0;
+              var realcount = 0;
+              while (j < i) {
+                realcount += components[0][i][j];
+                j++;
+              }
               i++;
             }
           
             pices[2] = pices[2].split('-');
             count = pices[2].length - 1;
             var i = 0;
+            components[1] = [];
             while (i <= count) {
-              var components = pices[2][i].split(':');
-              price[1] = pricecalc(components[0],components[1],pices[3],pices[4]);
+              components[1][i] = pices[2][i].split(':');
+              price[1] = pricecalc(components[1][i][0],components[1][i][1],pices[3],pices[4]);
               i++;
             }
-            text = "Стоимость: **" + price[1]*1 - price[0]*1) + "**";
+            text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
         }
       
         if (text != '') {
