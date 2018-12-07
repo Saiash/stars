@@ -40,11 +40,15 @@ client.on("message", message => {
             text = "Для рассчета стоимости улучшения сообщение должно быть следующего формата: \r\n**!улучшение /технология:количество-/технология:количество-/модификатор/тип**";
         } else if (message.content.indexOf('!улучшение') != -1) {
             var price = [0,0];
+            var income = [0,0];
             var pices = message.content.split('/');
             var components = [];
-            price[0] = multipricecalc(pices[1],pices[3],pices[4],message);
-            price[1] = multipricecalc(pices[2],pices[3],pices[4],message);
+            price[0] = multipricecalc(pices[1],pices[3],pices[4]);
+            income[0] = multiincomcalc(pices[1],pices[3],pices[4]);
+            price[1] = multipricecalc(pices[2],pices[3],pices[4]);
+            income[1] = multiincomcalc(pices[2],pices[3],pices[4]);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
+            text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";
         }
       
         if (text != '') {
@@ -70,7 +74,7 @@ var incomecalc = function (tech,count,mod,type) {
     return income;
 }
 
-var multipricecalc = function(string,mod,type,message) {
+var multipricecalc = function(string,mod,type) {
     string = string.split('-');
     var count = string.length - 1;
     var i = 0;
@@ -92,4 +96,28 @@ var multipricecalc = function(string,mod,type,message) {
         i++;
     }
   return price;
+}
+
+var multiincomcalc = function(string,mod,type) {
+    string = string.split('-');
+    var count = string.length - 1;
+    var i = 0;
+    var components = [];
+    components[0] = [];
+    var income = 0;
+    while (i <= count) {
+        components[0][i] = string[i].split(':');
+        var j = 0;
+        var realcount = 0;
+        while (j <= i) {
+            realcount += components[0][j][1]*1;
+            j++;
+        }
+        income += incomecalc(components[0][i][0]*1,realcount,mod*1,type*1);
+        if (realcount != components[0][i][1]*1) {
+            income += -incomecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
+        }
+        i++;
+    }
+  return income;
 }
