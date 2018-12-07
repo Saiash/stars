@@ -20,7 +20,7 @@ client.on("message", message => {
     if (message.content[0]== "!") {
         var text = "";
         if (message.content == '!help') {
-           text = "команды: !строительство";
+           text = "команды: !строительство\r\n!улучшение";
         }
         if (message.content == '!строительство') {
             text = "Для рассчета стоимости постройки сообщение должно быть следующего формата: \r\n**!строительство /технология/количество/модификатор/тип**";
@@ -39,7 +39,17 @@ client.on("message", message => {
         if (message.content == '!улучшение') {
             text = "Для рассчета стоимости улучшения сообщение должно быть следующего формата: \r\n**!улучшение /технология:количество-/технология:количество-/модификатор/тип**";
         } else if (message.content.indexOf('!улучшение') != -1) {
-          
+            var price = 0;
+            var pices = message.content.split('/');
+            pices[1] = pices[1].split('-');
+            count = pices[1]юlength - 1;
+            var i = 0;
+            while (i <= count) {
+              var components = pices[1][i].split(':');
+              price = pricecalc(components[0],components[1],pices[3],pices[4]);
+              i++;
+            }
+            text = price;
         }
       
         if (text != '') {
