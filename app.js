@@ -16,9 +16,9 @@ dices = {};
 dices.blue = ["",{},{dist:2,dmg:2,spec:1},{dist:3,dmg:2,spec:0},{dist:4,dmg:2,spec:0},{dist:5,dmg:1,spec:0},{dist:6,dmg:1,spec:1}];
 dices.yellow = ["",{dist:1,dmg:1,spec:0},{dist:1,dmg:0,spec:1},{dist:0,dmg:2,spec:1},{dist:0,dmg:2,spec:0},{dist:0,dmg:1,spec:1},{dist:2,dmg:1,spec:0}];
 dices.red = ["",{dmg:1,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:2,dist:0, spec:0},{dmg:3,dist:0, spec:0},{dmg:3,spec:1, dist:0}];
-dices.brown = ["",0,0,0,1,1,2];
-dices.grey = ["",0,1,1,1,2,3];
-dices.black = ["",0,2,2,2,3,4];
+dices.brown = ["",{def:0},{def:0},{def:0},{def:1},{def:1},{def:2}];
+dices.grey = ["",{def:0},{def:1},{def:1},{def:1},{def:2},{def:3}];
+dices.black = ["",{def:0},{def:2},{def:2},{def:2},{def:3},{def:4}];
 var heroes;
 var value;
 heroes = {};
@@ -39,8 +39,40 @@ heroes.sin.fatig = 0;
 heroes.sin.hp = 0;
 heroes.sin.status = "";
 
-var throwdice = function () {
-return "1234";
+var ThrowDice = function (message,roll_res,text,type,name) {
+    if (text != "") {
+      text += ", ";
+    }
+    count = message.content.split(name).length - 1;
+    while (count > 0) {
+        temp_text = "";
+        roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+        statistic[roll]++;
+        roll_res.dmg += dices[type][roll].dmg;
+        roll_res.dist += dices[type][roll].dist;
+        roll_res.spec += dices[type][roll].spec;
+        if (dices[type][roll].dmg >= 1) {
+          temp_text += " урон " + dices[type][roll].dmg;
+        }
+        if (dices[type][roll].dist >= 1) {
+          temp_text += " дистанция " + dices[type][roll].dist;
+        }
+        if (dices[type][roll].spec >= 1) {
+          temp_text += " запалы " + dices[type][roll].spec;
+        }
+        if (dices[type][roll].def >= 0) {
+          temp_text += " защита " + dices[type][roll].def;
+        }
+        if (temp_text == "") {
+          temp_text = 'ПРОМАХ';
+        }
+        text += name+": "+roll + " (**"+ temp_text +"**)";
+        count--;
+        if (count != 0 ) {
+          text += " и ";
+        }
+    } 
+    return [text,roll_res];
 }
 
 client.on("message", message => {
@@ -51,140 +83,39 @@ client.on("message", message => {
       roll_res.dmg = 0;
       roll_res.dist = 0;
       roll_res.spec = 0;
+      roll_res.def = 0;
       if (message.content.indexOf('синий') != -1) {
-        count = message.content.split("синий").length - 1;
-        while (count > 0) {
-          temp_text = "";
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          roll_res.dmg += dices.blue[roll].dmg;
-          roll_res.dist += dices.blue[roll].dist;
-          roll_res.spec += dices.blue[roll].spec;
-          if (dices.blue[roll].dmg >= 1) {
-            temp_text += " урон " + dices.blue[roll].dmg;
-          }
-          if (dices.blue[roll].dist >= 1) {
-            temp_text += " дистанция " + dices.blue[roll].dist;
-          }
-          if (dices.blue[roll].spec >= 1) {
-            temp_text += " запалы " + dices.blue[roll].spec;
-          }
-          if (temp_text == "") {
-            temp_text = 'ПРОМАХ';
-          }
-          text += "синий: "+roll + " (**"+ temp_text +"**)";
-          count--;
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'blue','синий');
+          roll_res = result[1];
+          text = result[0];
       }
       if (message.content.indexOf('желтый') != -1) {
-        if (text != "") {
-          text += ", ";
-        }
-        count = message.content.split("желтый").length - 1;
-        while (count > 0) {
-          temp_text = "";
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          roll_res.dmg += dices.yellow[roll].dmg;
-          roll_res.dist += dices.yellow[roll].dist;
-          roll_res.spec += dices.yellow[roll].spec;
-          if (dices.yellow[roll].dmg >= 1) {
-            temp_text += " урон " + dices.yellow[roll].dmg;
-          }
-          if (dices.yellow[roll].dist >= 1) {
-            temp_text += " дистанция " + dices.yellow[roll].dist;
-          }
-          if (dices.yellow[roll].spec >= 1) {
-            temp_text += " запалы " + dices.yellow[roll].spec;
-          }
-          text += "желтый: "+roll + " (**"+ temp_text +"**)";
-          count--;
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'yellow','желтый');
+          roll_res = result[1];
+          text = result[0];
       }
       if (message.content.indexOf('красный') != -1) {
-        if (text != "") {
-          text += ", ";
-        }
-        count = message.content.split("красный").length - 1;
-        while (count > 0) {
-          temp_text = "";
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          roll_res.dmg += dices.red[roll].dmg;
-          roll_res.dist += dices.red[roll].dist;
-          roll_res.spec += dices.red[roll].spec;
-          if (dices.red[roll].dmg >= 1) {
-            temp_text += " урон " + dices.red[roll].dmg;
-          }
-          if (dices.red[roll].dist >= 1) {
-            temp_text += " дистанция " + dices.red[roll].dist;
-          }
-          if (dices.red[roll].spec >= 1) {
-            temp_text += " запалы " + dices.red[roll].spec;
-          }
-          text += "красный: "+roll + " (**"+ temp_text +"**)";
-          count--;
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'red','красный');
+          roll_res = result[1];
+          text = result[0];
       }
       if (message.content.indexOf('коричневый') != -1) {
-        if (text != "") {
-          text += ", ";
-        }
-        count = message.content.split("коричневый").length - 1;
-        while (count > 0) {
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          text += "коричневый: "+roll + " (**"+ dices.brown[roll] +" защиты**)";
-          def += dices.brown[roll];
-          count--;
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'brown','коричневый');
+          roll_res = result[1];
+          text = result[0]; 
       }
       if (message.content.indexOf('серый') != -1) {
-        if (text != "") {
-          text += ", ";
-        }
-        count = message.content.split("серый").length - 1;
-        while (count > 0) {
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          text += "серый: "+roll + " (**"+ dices.grey[roll] +" защиты**)";
-          count--;          
-          def += dices.grey[roll];
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'grey','серый');
+          roll_res = result[1];
+          text = result[0]; 
       }
       if (message.content.indexOf('черный') != -1) {
-        if (text != "") {
-          text += ", ";
-        }
-        count = message.content.split("черный").length - 1;
-        while (count > 0) {
-          roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-          statistic[roll]++;
-          text += "черный: "+roll + " (**"+ dices.black[roll] +" защиты**)";
-          count--;
-          def += dices.black[roll];
-          if (count != 0 ) {
-            text += " и ";
-          }
-        }  
+          var result = ThrowDice(message,roll_res,text,'black','черный');
+          roll_res = result[1];
+          text = result[0];   
       }
-      if (def != 0) {
-        text += ', всего защиты: **' + def + "**";
+      if (roll_res.def >= 0) {
+        text += '\r\nВсего защиты: **' + def + "**";
       }
       if (roll_res.dmg >= 1) {
         text += "\r\nРезультаты броска: урона: **" + roll_res.dmg + "**";
