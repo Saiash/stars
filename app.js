@@ -25,10 +25,11 @@ client.on("message", message => {
         text = "Для рассчета сообщение должно быть следующего формата следующего формата: !строительство /технология/количество/модификатор/";
     } else if (message.content.indexOf('!строительство') != -1) {
         var price = 0;
-        var tech = message.content.split('/')[1];
-        var count = message.content.split('/')[2];
-        var mod = message.content.split('/')[3];
-        text = tech + " " + count + " " + mod;
+        var tech = message.content.split('/')[1]*1;
+        var count = message.content.split('/')[2]*1;
+        var mod = message.content.split('/')[3]*1;
+        price = Math.round((2+2.7*(tech+0.2))*Math.pow(count,1.2)*((20)/Math.pow(23,2.5))/((20- mod)/Math.pow(23-mod,2.5)));
+        text = "Цена постройки: "+price;
     }
     if (text != '') {
         message.channel.send(text);
