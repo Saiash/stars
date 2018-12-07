@@ -22,22 +22,21 @@ dices.black = ["",{def:0},{def:2},{def:2},{def:2},{def:3},{def:4}];
 var heroes;
 var value;
 heroes = {};
-heroes.tarha = {};
-heroes.tarha.fatig = 0;
-heroes.tarha.hp = 0;
+heroes.tarha = {hp:0,hpmax:10,fatig:0,fatigmax:4};
 heroes.tarha.status = "";
-heroes.avrik = {};
-heroes.avrik.fatig = 0;
-heroes.avrik.hp = 0;
+heroes.tarha.stats = 'Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
+
+heroes.avrik = {hp:0,hpmax:12,fatig:0,fatigmax:4};
 heroes.avrik.status = "";
-heroes.jena = {};
-heroes.jena.fatig = 0;
-heroes.jena.hp = 0;
-heroes.jena.status = "";
-heroes.sin = {};
-heroes.sin.fatig = 0;
-heroes.sin.hp = 0;
+heroes.avrik.stats = 'Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
+
+heroes.sin = {hp:0,hpmax:12,fatig:0,fatigmax:4};
 heroes.sin.status = "";
+heroes.sin.stats = 'Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
+
+heroes.jena = {hp:0,hpmax:8,fatig:0,fatigmax:5};
+heroes.jena.status = "";
+heroes.jena.stats = 'Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
 
 var ThrowDice = function (message,roll_res,text,type,name) {
     if (text != "") {
@@ -74,6 +73,43 @@ var ThrowDice = function (message,roll_res,text,type,name) {
         }
     } 
     return [text,roll_res];
+}
+var EditHero = function(message,text,type,name) {
+    if (message.content.indexOf('урон+') != -1) {
+        value = message.content.split('урон+')[1];
+        value = value.split(',')[0];
+        heroes[type].hp += value*1;
+    } else if (message.content.indexOf('урон-') != -1) {
+        value = message.content.split('урон-')[1];
+        value = value.split(',')[0];
+        heroes[type].hp += value*-1;
+    } else if (message.content.indexOf('урон=') != -1) {
+        value = message.content.split('урон=')[1];
+        value = value.split(',')[0];
+        heroes[type].hp = value*1;
+    }
+    if (message.content.indexOf('усталость+') != -1) {
+        value = message.content.split('усталость+')[1];
+        value = value.split(',')[0];
+        heroes[type].fatig += value*1;
+    } else if (message.content.indexOf('усталость-') != -1) {
+        value = message.content.split('усталость-')[1];
+        value = value.split(',')[0];
+        heroes[type].fatig += value*-1;
+    } else if (message.content.indexOf('усталость=') != -1) {
+        value = message.content.split('усталость=')[1];
+        value = value.split(',')[0];
+        heroes[type].fatig = value*1;
+    }
+    if (message.content.indexOf('эффект=') != -1) {
+        value = message.content.split('эффект=')[1];
+        heroes[type].status = value;
+    }
+    text = name+': повреждения: **'+heroes[type].hp+'/'+heroes[type].hpmax+'** Выносливость: **'+heroes[type].fatig+'/'+heroes[type].fatigmax+'**, '+heroes[type].stats;
+    if (heroes[type].status != "") {
+        text += ' Особые эффекты: ' + heroes[type].status;
+    }
+    return text;
 }
 
 client.on("message", message => {
@@ -128,187 +164,42 @@ client.on("message", message => {
         text += ', запалов: **' + roll_res.spec + "**";
       }
       if  (message.content.indexOf('!тарха') != -1 || message.content.indexOf('!Тарха') != -1 || message.content.indexOf('! тарха') != -1 || message.content.indexOf('! Тарха') != -1) {
-        if (message.content.indexOf('урон+') != -1) {
-          value = message.content.split('урон+')[1];
-          value = value.split(',')[0];
-          heroes.tarha.hp += value*1;
-        } else if (message.content.indexOf('урон-') != -1) {
-          value = message.content.split('урон-')[1];
-          value = value.split(',')[0];
-          heroes.tarha.hp += value*-1;
-        } else if (message.content.indexOf('урон=') != -1) {
-          value = message.content.split('урон=')[1];
-          value = value.split(',')[0];
-          heroes.tarha.hp = value*1;
-        }
-        if (message.content.indexOf('усталость+') != -1) {
-          value = message.content.split('усталость+')[1];
-          value = value.split(',')[0];
-          heroes.tarha.fatig += value*1;
-        } else if (message.content.indexOf('усталость-') != -1) {
-          value = message.content.split('усталость-')[1];
-          value = value.split(',')[0];
-          heroes.tarha.fatig += value*-1;
-        } else if (message.content.indexOf('усталость=') != -1) {
-          value = message.content.split('усталость=')[1];
-          value = value.split(',')[0];
-          heroes.tarha.fatig = value*1;
-        }
-        if (message.content.indexOf('эффект=') != -1) {
-          value = message.content.split('эффект=')[1];
-          heroes.tarha.status = value;
-        }
-        text = 'Тарха: повреждения: **'+heroes.tarha.hp+'/10** Выносливость: **'+heroes.tarha.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
-        if (heroes.tarha.status != "") {
-          text += ' Особые эффекты: ' + heroes.tarha.status;
-        }
+          text = EditHero(message,text,'tarha',"Тарха");
       }
       if (message.content.indexOf('!Аврик') != -1 || message.content.indexOf('!аврик') != -1 || message.content.indexOf('! Аврик') != -1 || message.content.indexOf('! аврик') != -1) {
-        if (message.content.indexOf('урон+') != -1) {
-          value = message.content.split('урон+')[1];
-          value = value.split(',')[0];
-          heroes.avrik.hp += value*1;
-        } else if (message.content.indexOf('урон-') != -1) {
-          value = message.content.split('урон-')[1];
-          value = value.split(',')[0];
-          heroes.avrik.hp += value*-1;
-        } else if (message.content.indexOf('урон=') != -1) {
-          value = message.content.split('урон=')[1];
-          value = value.split(',')[0];
-          heroes.avrik.hp = value*1;
-        }
-        if (message.content.indexOf('усталость+') != -1) {
-          value = message.content.split('усталость+')[1];
-          value = value.split(',')[0];
-          heroes.avrik.fatig += value*1;
-        } else if (message.content.indexOf('усталость-') != -1) {
-          value = message.content.split('усталость-')[1];
-          value = value.split(',')[0];
-          heroes.avrik.fatig += value*-1;
-        } else if (message.content.indexOf('усталость=') != -1) {
-          value = message.content.split('усталость=')[1];
-          value = value.split(',')[0];
-          heroes.avrik.fatig = value*1;
-        }
-        if (message.content.indexOf('эффект=') != -1) {
-          value = message.content.split('эффект=')[1];
-          heroes.avrik.status = value;
-        }
-        text = 'Аврик: повреждения: **'+heroes.avrik.hp+'/12** Выносливость: **'+heroes.avrik.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
-        if (heroes.avrik.status != "") {
-          text += ' Особые эффекты: ' + heroes.avrik.status;
-        }
+          text = EditHero(message,text,'avrik',"Аврик");
       }
       if (message.content.indexOf('!Джайн') != -1 || message.content.indexOf('!джайн') != -1 || message.content.indexOf('! Джайн') != -1 || message.content.indexOf('! джайн') != -1) {
-        if (message.content.indexOf('урон+') != -1) {
-          value = message.content.split('урон+')[1];
-          value = value.split(',')[0];
-          heroes.jena.hp += value*1;
-        } else if (message.content.indexOf('урон-') != -1) {
-          value = message.content.split('урон-')[1];
-          value = value.split(',')[0];
-          heroes.jena.hp += value*-1;
-        } else if (message.content.indexOf('урон=') != -1) {
-          value = message.content.split('урон=')[1];
-          heroes.jena.hp = value*1;
-        }
-        if (message.content.indexOf('усталость+') != -1) {
-          value = message.content.split('усталость+')[1];
-          value = value.split(',')[0];
-          heroes.jena.fatig += value*1;
-        } else if (message.content.indexOf('усталость-') != -1) {
-          value = message.content.split('усталость-')[1];
-          value = value.split(',')[0];
-          heroes.jena.fatig += value*-1;
-        } else if (message.content.indexOf('усталость=') != -1) {
-          value = message.content.split('усталость=')[1];
-          value = value.split(',')[0];
-          heroes.jena.fatig = value*1;
-        }
-        if (message.content.indexOf('эффект=') != -1) {
-          value = message.content.split('эффект=')[1];
-          value = value.split(',')[0];
-          heroes.jena.status = value;
-        }
-        text = 'Джайн: повреждения: **'+heroes.jena.hp+'/8** Выносливость: **'+heroes.jena.fatig+'/5**, Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
-        if (heroes.jena.status != "") {
-          text += ' Особые эффекты: ' + heroes.jena.status;
-        }
+          text = EditHero(message,text,'jena',"Джайн");
       }
       if  (message.content.indexOf('!Синдраэль') != -1 || message.content.indexOf('!синдраэль') != -1 || message.content.indexOf('! Синдраэль') != -1 || message.content.indexOf('! синдраэль') != -1 || message.content.indexOf('!Син') != -1 || message.content.indexOf('!син') != -1 || message.content.indexOf('! Син') != -1 || message.content.indexOf('! син') != -1) {
-        if (message.content.indexOf('урон+') != -1) {
-          value = message.content.split('урон+')[1];
-          value = value.split(',')[0];
-          heroes.sin.hp += value*1;
-        } else if (message.content.indexOf('урон-') != -1) {
-          value = message.content.split('урон-')[1];
-          value = value.split(',')[0];
-          heroes.sin.hp += value*-1;
-        } else if (message.content.indexOf('урон=') != -1) {
-          value = message.content.split('урон=')[1];
-          value = value.split(',')[0];
-          heroes.sin.hp = value*1;
-        }
-        if (message.content.indexOf('усталость+') != -1) {
-          value = message.content.split('усталость+')[1];
-          value = value.split(',')[0];
-          heroes.sin.fatig += value*1;
-        } else if (message.content.indexOf('усталость-') != -1) {
-          value = message.content.split('усталость-')[1];
-          value = value.split(',')[0];
-          heroes.sin.fatig += value*-1;
-        } else if (message.content.indexOf('усталость=') != -1) {
-          value = message.content.split('усталость=')[1];
-          value = value.split(',')[0];
-          heroes.sin.fatig = value*1;
-        }
-        if (message.content.indexOf('эффект=') != -1) {
-          value = message.content.split('эффект=')[1];
-          heroes.sin.status = value;
-        }
-        text = 'Синдраэль: повреждения: **'+heroes.sin.hp+'/12** Выносливость: **'+heroes.sin.fatig+'/4**, Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
-        if (heroes.sin.status != "") {
-          text += ' Особые эффекты: ' + heroes.sin.status;
-        }
+          text = EditHero(message,text,'sin',"Синдраэль");
       }
       if (message.content == '!статистика') {
-        text = "1:"+statistic[1]+", 2:"+statistic[2]+", 3:"+statistic[3]+", 4:"+statistic[4]+", 5:"+statistic[5]+", 6:"+statistic[6];
+          text = "1:"+statistic[1]+", 2:"+statistic[2]+", 3:"+statistic[3]+", 4:"+statistic[4]+", 5:"+statistic[5]+", 6:"+statistic[6];
       }
       if (message.content == '!обнулить') {
-        heroes.tarha = {};
-        heroes.tarha.fatig = 0;
-        heroes.tarha.hp = 0;
-        heroes.tarha.status = "";
-        heroes.avrik = {};
-        heroes.avrik.fatig = 0;
-        heroes.avrik.hp = 0;
-        heroes.avrik.status = "";
-        heroes.jena = {};
-        heroes.jena.fatig = 0;
-        heroes.jena.hp = 0;
-        heroes.jena.status = "";
-        heroes.sin = {};
-        heroes.sin.fatig = 0;
-        heroes.sin.hp = 0;
-        heroes.sin.status = "";
+          heroes.tarha = {hp:0,hpmax:10,fatig:0,fatigmax:4};
+          heroes.tarha.status = "";
+          heroes.tarha.stats = 'Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
+
+          heroes.avrik = {hp:0,hpmax:12,fatig:0,fatigmax:4};
+          heroes.avrik.status = "";
+          heroes.avrik.stats = 'Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
+
+          heroes.sin = {hp:0,hpmax:12,fatig:0,fatigmax:4};
+          heroes.sin.status = "";
+          heroes.sin.stats = 'Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
+
+          heroes.jena = {hp:0,hpmax:8,fatig:0,fatigmax:5};
+          heroes.jena.status = "";
+          heroes.jena.stats = 'Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
       }
       if (message.content == '!герои') {
-        text = 'Тарха: повреждения: **'+heroes.tarha.hp+'/10** Выносливость: **'+heroes.tarha.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:3, Знание:4, Восприятие:2.';
-        if (heroes.tarha.status != "") {
-          text += ' Особые эффекты: ' + heroes.tarha.status;
-        }
-         text += "\r\nАврик: повреждения: **"+heroes.avrik.hp+'/12** Выносливость: **'+heroes.avrik.fatig+'/4**, Скорость: 4 Защита: серый. Сила:2, Воля:4, Знание:3, Восприятие:2.';
-        if (heroes.avrik.status != "") {
-          text += ' Особые эффекты: ' + heroes.avrik.status;
-        }
-        text += "\r\nДжайн: повреждения: **"+heroes.jena.hp+'/8** Выносливость: **'+heroes.jena.fatig+'/5**, Скорость: 5 Защита: серый. Сила:2, Воля:2, Знание:3, Восприятие:4.';
-        if (heroes.jena.status != "") {
-          text += ' Особые эффекты: ' + heroes.jena.status;
-        }
-        text += "\r\nСиндраэль: повреждения: **"+heroes.sin.hp+'/12** Выносливость: **'+heroes.sin.fatig+'/4**, Скорость: 4 Защита: серый. Сила:4, Воля:2, Знание:3, Восприятие:2.';
-        if (heroes.sin.status != "") {
-          text += ' Особые эффекты: ' + heroes.sin.status;
-        }
+          text = EditHero(message,text,'tarha',"Тарха");
+          text += EditHero(message,text,'avrik',"Аврик");
+          text += EditHero(message,text,'jena',"Джайн");
+          text += EditHero(message,text,'sin',"Синдраэль");
       }
       message.channel.send(text);
     }
