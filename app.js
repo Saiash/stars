@@ -45,10 +45,10 @@ client.on("message", message => {
             var pices = message.content.split('/');
             pices[4] = pices[4].split(':');
             var components = [];
-            price[0] = multipricecalc(pices[1],pices[3],pices[4]);
-            income[0] = multiincomcalc(pices[1],pices[4][0],pices[4]);
-            price[1] = multipricecalc(pices[2],pices[3],pices[4]);
-            income[1] = multiincomcalc(pices[2],pices[4][1],pices[4]);
+            price[0] = multipricecalc(pices[1],pices[3],pices[5]);
+            income[0] = multiincomcalc(pices[1],pices[4][0],pices[5]);
+            price[1] = multipricecalc(pices[2],pices[3],pices[5]);
+            income[1] = multiincomcalc(pices[2],pices[4][1],pices[5]);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
