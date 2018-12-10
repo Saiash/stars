@@ -20,7 +20,13 @@ client.on("message", message => {
     if (message.content[0]== "!") {
         var text = "";
         if (message.content == '!help') {
-           text = "команды: !строительство\r\n!улучшение";
+           text = "команды: !строительство\r\n!улучшение\r\n!отряд\r\n!корабль";
+        }
+        if (message.content == '!отряд') {
+            text = "Для рассчета стоимости отряда сообщение должно быть следующего формата: \r\n**!отряд /атака/защита/мод**";
+        } else if (message.content.indexOf('!отряд') != -1) {
+            var pices = message.content.split('/');
+            var price = 2+pices[1]*1+pices[2]*2+pices[3]*0;
         }
         if (message.content == '!строительство') {
             text = "Для рассчета стоимости постройки сообщение должно быть следующего формата: \r\n**!строительство /технология/количество/мод. строительства/мод. добычи/тип**";
@@ -52,7 +58,6 @@ client.on("message", message => {
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
-      
         if (text != '') {
             message.channel.send(text);
         }
@@ -71,7 +76,7 @@ var pricecalc = function (tech,count,mod,type) {
 var incomecalc = function (tech,count,mod,type) {
     var income = 0;
     if (type == 1) {
-      income = Math.round(Math.pow((count+tech)*(0.7+mod/14)+1,1.6+(tech)/8));
+      income = Math.round(Math.pow((count+tech)*(0.7+Math.pow(mod,1.35)*0.07)+1,1.6+(tech)/8));
     }
     if (tech == 0 && count == 0) {
       income = 0;
