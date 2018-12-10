@@ -59,10 +59,10 @@ client.on("message", message => {
             var pices = message.content.split('/');
             pices[4] = pices[4].split(':');
             var components = [];
-            price[0] = multipricecalc(pices[1],pices[3],pices[5]);
-            income[0] = multiincomcalc(pices[1],pices[4][0],pices[5]);
-            price[1] = multipricecalc(pices[2],pices[3],pices[5]);
-            income[1] = multiincomcalc(pices[2],pices[4][1],pices[5]);
+            price[0] = multipricecalc(pices[1],pices[3],pices[5],message);
+            income[0] = multiincomcalc(pices[1],pices[4][0],pices[5],message);
+            price[1] = multipricecalc(pices[2],pices[3],pices[5],message);
+            income[1] = multiincomcalc(pices[2],pices[4][1],pices[5],message);
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
@@ -92,7 +92,7 @@ var incomecalc = function (tech,count,mod,type) {
     return income;
 }
 
-var multipricecalc = function(string,mod,type) {
+var multipricecalc = function(string,mod,type,message) {
     string = string.split('-');
     var count = string.length - 1;
     var i = 0;
@@ -107,9 +107,10 @@ var multipricecalc = function(string,mod,type) {
             realcount += components[0][j][1]*1;
             j++;
         }
-        price += pricecalc(components[0][i][0]*1,realcount,mod*1,type*1);
+        price += Math.round(pricecalc(components[0][i][0]*1,realcount,mod*1,type*1));
         if (realcount != components[0][i][1]*1) {
-            price += -Math.round(pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1)*0.66);
+            price = -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
+                          message.channel.send(realcount);
         }
         i++;
     }
