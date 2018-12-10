@@ -109,8 +109,7 @@ var multipricecalc = function(string,mod,type,message) {
         }
         price += Math.round(pricecalc(components[0][i][0]*1,realcount,mod*1,type*1));
         if (realcount != components[0][i][1]*1) {
-            price = -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
-                          message.channel.send(realcount);
+            price += -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
         }
         i++;
     }
