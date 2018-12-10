@@ -26,7 +26,15 @@ client.on("message", message => {
             text = "Для рассчета стоимости отряда сообщение должно быть следующего формата: \r\n**!отряд /атака/защита/мод**";
         } else if (message.content.indexOf('!отряд') != -1) {
             var pices = message.content.split('/');
-            var price = 2+pices[1]*1+pices[2]*2+pices[3]*0;
+            var price = Math.round(2+pices[1]*1+pices[2]*2+pices[3]*0.7);
+            text = "Стоимость: **" + price + "**";
+        }
+        if (message.content == '!корабль') {
+            text = "Для рассчета стоимости корабля сообщение должно быть следующего формата: \r\n**!отряд /атака/защита/двигатель/мод**";
+        } else if (message.content.indexOf('!корабль') != -1) {
+            var pices = message.content.split('/');
+            var price = Math.round(5+pices[1]*2+pices[2]*3+pices[3]*4+pices[4]*1);
+            text = "Стоимость: **" + price + "**";
         }
         if (message.content == '!строительство') {
             text = "Для рассчета стоимости постройки сообщение должно быть следующего формата: \r\n**!строительство /технология/количество/мод. строительства/мод. добычи/тип**";
