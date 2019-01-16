@@ -156,16 +156,24 @@ function throw_dice(times,edges) {
   }
   return result;
 }
-function calc_rand_price(price,edges) {
-  var price = 15;
+function calc_rand_price(price) {
+  var price = price;
   var result = throw_dice(price,100);
   var middle = 0;
   result.forEach(function(element) {
     if (Number.isInteger(element)) {
-      middle += (element/50) * (element/50);
+      middle += (element/58) * (element/58) * (element/58)
     }
   });
-  result = middle;
+  return middle;
 }
 
+var result = [];
+var i = 0;
+  while (i < 50) {
+    result.push(Math.floor(calc_rand_price(15)));
+    i++;
+  }
 console.log(result);
+console.log(result.reduce((a, b) => a + b, 0)/result.length);
+
