@@ -66,7 +66,7 @@ client.on("message", message => {
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
-        if (message.content.match(/!экономика/ig) != -1) {
+        if (message.content.match(/!экономика/ig) != null) {
           var values = message.content.match(/\b(\d+)\b/ig);
           var price = values[0];
           var mod = values[1];
