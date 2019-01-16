@@ -30,7 +30,7 @@ client.on("message", message => {
             text = "Стоимость: **" + price + "**";
         }
         if (message.content == '!корабль') {
-            text = "Для рассчета стоимости корабля сообщение должно быть следующего формата: \r\n**!отряд /атака/защита/двигатель/мод**";
+            text = "Для рассчета стоимости корабля сообщение должно быть следующего формата: \r\n**!корабль /атака/защита/двигатель/мод**";
         } else if (message.content.indexOf('!корабль') != -1) {
             var pices = message.content.split('/');
             var price = Math.round(5+pices[1]*2+pices[2]*3+pices[3]*4+pices[4]*1);
@@ -66,6 +66,12 @@ client.on("message", message => {
             text = "Стоимость: **" + (price[1]*1 - price[0]*1) + "**";
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
+        if (message.content.match(/!экономика/ig) != -1) {
+          var values = message.content.match(/\b(\d+)\b/ig);
+          var price = values[0];
+          var mod = values[1];
+          text = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+        } 
         if (text != '') {
             message.channel.send(text);
         }
