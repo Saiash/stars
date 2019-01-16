@@ -172,16 +172,7 @@ function calc_rand_price(price) {
 var result = [];
 var i = 0;
 var result_values = {};
-  while (i < 1000) {
-    result = calc_rand_price(10);
-    var temp_val = result*3.5 - 80;
-    if (result_values[result] != null) {
-      result_values[result][temp_val] += 1/10;
-    } else {
-      result_values[result] = {};
-      result_values[result][temp_val] = 1/10;
-    }
-    i++;
-  } 
+    result = calc_rand_price(1);
+    var temp_val = (result-12)*4 - 44;
 
-console.log(result_values);
+console.log(temp_val);
