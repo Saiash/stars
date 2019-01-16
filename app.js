@@ -70,7 +70,11 @@ client.on("message", message => {
           var values = message.content.match(/\b(\d+)\b/ig);
           var price = values[0];
           var mod = values[1];
-          text = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+          var result = [];
+          result = calc_rand_mod(mod);
+          text = "Эффективное вложение: " + Math.round(price * result) + ", цена технологии: " + Math.round(15/result) + "/" + 
+              Math.round(30/result) + "/" + Math.round(65/result) + "/" + Math.round(15/result) + "/" + Math.round(15/result) + "/" + 
+              Math.round(15/result) + "/";
         } 
         if (text != '') {
             message.channel.send(text);
@@ -147,24 +151,20 @@ var multiincomcalc = function(string,mod,type) {
 }
 
 
-function throw_dice(times,edges) {
+function throw_dice(times,edges,mod=0) {
   var result = [];
   var i = 0;
   while (i < times) {
-    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1);
+    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1)+2*mod;
     i++;
   }
   return result;
 }
-function calc_rand_mod(price) {
+function calc_rand_mod(mod=0) {
   var price = price;
-  var result = throw_dice(8,50);
+  var result = throw_dice(8,50,mod);
   var middle = 0;
   result = (result[0]+result[1]+result[2])/3;
   result = (result-12)*4 - 44;
   return 1+result/100;
 }
-
-var result = [];
-result = calc_rand_mod(1);
-console.log(result);
