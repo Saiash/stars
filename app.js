@@ -73,8 +73,8 @@ client.on("message", message => {
           var result = [];
           result = calc_rand_mod(mod);
           text = "Эффективное вложение: " + Math.round(price * result) + ", цена технологии: " + Math.round(15/result) + "/" + 
-              Math.round(30/result) + "/" + Math.round(65/result) + "/" + Math.round(15/result) + "/" + Math.round(15/result) + "/" + 
-              Math.round(15/result) + "/";
+              Math.round(30/result) + "/" + Math.round(55/result) + "/" + Math.round(95/result) + "/" + Math.round(150/result) + "/" + 
+              Math.round(240/result) + "/" + Math.round(340/result);
         } 
         if (text != '') {
             message.channel.send(text);
