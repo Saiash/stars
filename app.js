@@ -156,23 +156,15 @@ function throw_dice(times,edges) {
   }
   return result;
 }
-function calc_rand_price(price) {
+function calc_rand_mod(price) {
   var price = price;
   var result = throw_dice(8,50);
   var middle = 0;
   result = (result[0]+result[1]+result[2])/3;
-  /*result.forEach(function(element) {
-    if (Number.isInteger(element)) {
-      middle = ;
-    }
-  });*/
-  return Math.floor(result);
+  result = (result-12)*4 - 44;
+  return 1+result/100;
 }
 
 var result = [];
-var i = 0;
-var result_values = {};
-    result = calc_rand_price(1);
-    var temp_val = (result-12)*4 - 44;
-
-console.log(temp_val);
+result = calc_rand_mod(1);
+console.log(result);
