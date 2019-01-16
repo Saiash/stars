@@ -158,22 +158,27 @@ function throw_dice(times,edges) {
 }
 function calc_rand_price(price) {
   var price = price;
-  var result = throw_dice(price,100);
+  var result = throw_dice(5,20);
   var middle = 0;
-  result.forEach(function(element) {
+  result = (result[0]+result[1]+result[2])/3;
+  /*result.forEach(function(element) {
     if (Number.isInteger(element)) {
-      middle += Math.sqrt((element/55) * (element/50)* (element/33));
+      middle = ;
     }
-  });
-  return middle;
+  });*/
+  return Math.floor(result);
 }
 
 var result = [];
 var i = 0;
-  while (i < 150) {
-    result.push(Math.floor(calc_rand_price(10)));
+var result_values = {};
+  while (i < 1000) {
+    result = calc_rand_price(10);
+    if (result_values[result] != null) {
+      result_values[result] += 1/10;
+    } else {
+      result_values[result] = 1/10;
+    }
     i++;
   } 
-console.log(result);
-console.log(result.reduce((a, b) => a + b, 0)/result.length);
-
+console.log(result_values);
