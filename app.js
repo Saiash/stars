@@ -158,7 +158,7 @@ function throw_dice(times,edges) {
 }
 function calc_rand_price(price) {
   var price = price;
-  var result = throw_dice(5,20);
+  var result = throw_dice(8,50);
   var middle = 0;
   result = (result[0]+result[1]+result[2])/3;
   /*result.forEach(function(element) {
@@ -174,11 +174,14 @@ var i = 0;
 var result_values = {};
   while (i < 1000) {
     result = calc_rand_price(10);
+    var temp_val = result*3.5 - 80;
     if (result_values[result] != null) {
-      result_values[result] += 1/10;
+      result_values[result][temp_val] += 1/10;
     } else {
-      result_values[result] = 1/10;
+      result_values[result] = {};
+      result_values[result][temp_val] = 1/10;
     }
     i++;
   } 
+
 console.log(result_values);
