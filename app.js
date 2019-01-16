@@ -145,3 +145,26 @@ var multiincomcalc = function(string,mod,type) {
     }
   return income;
 }
+
+
+function throw_dice(times,edges) {
+  var result = [];
+  var i = 0;
+  while (i < times) {
+    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1);
+    i++;
+  }
+  return result;
+}
+
+var price = 15;
+var result = throw_dice(price,100);
+var middle;
+result.forEach(function(element) {
+  console.log(element*1);
+  if (element != undefined && element != NaN) {
+    middle += element;
+  }
+});
+result = middle;
+console.log(result);
