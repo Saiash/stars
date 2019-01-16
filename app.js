@@ -162,7 +162,7 @@ function calc_rand_price(price) {
   var middle = 0;
   result.forEach(function(element) {
     if (Number.isInteger(element)) {
-      middle += (element/58) * (element/58) * (element/58)
+      middle += Math.sqrt((element/55) * (element/50)* (element/33));
     }
   });
   return middle;
@@ -170,10 +170,10 @@ function calc_rand_price(price) {
 
 var result = [];
 var i = 0;
-  while (i < 50) {
-    result.push(Math.floor(calc_rand_price(15)));
+  while (i < 150) {
+    result.push(Math.floor(calc_rand_price(10)));
     i++;
-  }
+  } 
 console.log(result);
 console.log(result.reduce((a, b) => a + b, 0)/result.length);
 
