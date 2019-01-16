@@ -156,15 +156,16 @@ function throw_dice(times,edges) {
   }
   return result;
 }
+function calc_rand_price(price,edges) {
+  var price = 15;
+  var result = throw_dice(price,100);
+  var middle = 0;
+  result.forEach(function(element) {
+    if (Number.isInteger(element)) {
+      middle += (element/50) * (element/50);
+    }
+  });
+  result = middle;
+}
 
-var price = 15;
-var result = throw_dice(price,100);
-var middle;
-result.forEach(function(element) {
-  console.log(element*1);
-  if (element != undefined && element != NaN) {
-    middle += element;
-  }
-});
-result = middle;
 console.log(result);
