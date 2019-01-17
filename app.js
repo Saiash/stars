@@ -155,7 +155,7 @@ function throw_dice(times,edges,mod=0) {
   var result = [];
   var i = 0;
   while (i < times) {
-    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1)+2*mod;
+    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1)+edges*mod/16;
     i++;
   }
   return result;
