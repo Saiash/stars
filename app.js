@@ -156,15 +156,14 @@ function throw_dice(times,edges,mod=0) {
   var i = 0;
   while (i < times) {
     var temp_val = Math.random();
-    result.push((Math.floor(temp_val * (edges - 1 + 1)) + 1)+edges*mod/16;
-    console.log(Math.floor(temp_val * (edges - 1 + 1)) + 1) + " " + edges*mod/16);
+    result.push((Math.floor(temp_val * (edges - 1 + 1)) + 1)+edges*mod/16);
     i++;
   }
   return result;
 }
 function calc_rand_mod(mod=0) {
   var price = price;
-  var result = throw_dice(8,50,mod);
+  var result = throw_dice(3,50,mod);
   var middle = 0;
   result = (result[0]+result[1]+result[2])/3;
   result = (result-12)*4 - 44;
