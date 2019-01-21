@@ -67,7 +67,7 @@ client.on("message", message => {
             text += "\r\nДоход: **+" + (income[1]*1 - income[0]*1) + "**, всего: **"+(income[1]*1)+"**";            
         }
         if (message.content.match(/!экономика/ig) != null) {
-          var values = message.content.match(/\b(\d+)\b/ig);
+          var values = message.content.match(/(-\d+)|(\d+)/ig);
           var price = values[0];
           var mod = values[1];
           var result = [];
@@ -155,7 +155,9 @@ function throw_dice(times,edges,mod=0) {
   var result = [];
   var i = 0;
   while (i < times) {
-    result.push(Math.floor(Math.random() * (edges - 1 + 1)) + 1)+edges*mod/16;
+    var temp_val = Math.random();
+    result.push((Math.floor(temp_val * (edges - 1 + 1)) + 1)+edges*mod/16;
+    console.log(Math.floor(temp_val * (edges - 1 + 1)) + 1) + " " + edges*mod/16);
     i++;
   }
   return result;
