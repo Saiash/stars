@@ -19,10 +19,16 @@ setInterval(() => {
 
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto('https://dungeonmaster.ru/Default.aspx');
-  await page.screenshot({path: 'example.png'});
+  
+   // Get the "viewport" of the page, as reported by the page.
+   const element = await page.$("body");
+    const text = await page.evaluate(element => element.textContent, element);
+  });
+
+  console.log('Dimensions:', dimensions);
 
   await browser.close();
   console.log('success!');
