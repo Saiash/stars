@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require('fs');
+const puppeteer = require('puppeteer');
 
 client.login("NTIwNTg4MzU2MTY2NDgzOTc4.DuwGMA.UWJ1lGqoX6VsX6FFDBiDfVkVJuQ");
 
@@ -15,6 +16,18 @@ app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 220000);
+
+
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://dungeonmaster.ru/Default.aspx');
+  await page.screenshot({path: 'example.png'});
+
+  await browser.close();
+  console.log('success!');
+})();
+
 
 client.on("message", message => {
     if (message.content[0]== "!") {
