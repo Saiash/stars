@@ -24,14 +24,14 @@ setInterval(() => {
   await page.goto('https://dungeonmaster.ru/Default.aspx');
   
    // Get the "viewport" of the page, as reported by the page.
-   const element = await page.$("body");
+   const element = await page.$("#ctl00_mainContent_lblOpinion");
     const text = await page.evaluate(element => element.textContent, element);
-  });
 
-  console.log('Dimensions:', dimensions);
 
-  await browser.close();
-  console.log('success!');
+
+    await browser.close();
+    console.log('success!');
+    console.log(text);
 })();
 
 
