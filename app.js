@@ -22,36 +22,21 @@ setInterval(() => {
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
     await page.goto('https://dungeonmaster.ru/Login.aspx');
+    console.log('success!1');
 
     await page.type('#ctl00_mainContent_txtMobileLogin', "Solanus");
     await page.type('#ctl00_mainContent_txtMobilePassword', "seaknight");
-    await page.click('#ctl00_mainContent_btnMobileLogin input');
+    await page.click('#ctl00_mainContent_btnMobileLogin');
     await page.waitForNavigation();
-  
-     // Get the "viewport" of the page, as reported by the page.
-     const element = await page.$("#ctl00_mainContent_lblOpinion");
-    const text = await page.evaluate(element => element.textContent, element);
+      console.log('success!2');
 
-
+    const element = await page.$("#ctl00_leftMenu_dmLeftMenu_gwMyMasterModules_ctl01_lnkGame_0");
+    var text = await page.evaluate(element => element.textContent, element);
 
     await browser.close();
     console.log('success!');
     console.log(text);
-  
 
-    // Login
-    await page.type('#email', input.username);
-    await page.type('#pass', input.password);
-    await page.click('#loginbutton input');
-    await page.waitForNavigation();
-
-    // Get cookies
-    const cookies = await page.cookies();
-
-    // Use cookies in other tab or browser
-    const page2 = await browser.newPage();
-    await page2.setCookie(...cookies);
-    await page2.goto('https://facebook.com'); // Opens page as logged user
 })();
 
 
