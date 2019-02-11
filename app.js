@@ -18,28 +18,6 @@ setInterval(() => {
 }, 220000);
 
 
-(async () => {
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-    const page = await browser.newPage();
-    await page.goto('https://dungeonmaster.ru/Login.aspx');
-    console.log('success!1');
-
-    await page.type('#ctl00_mainContent_txtMobileLogin', "Solanus");
-    await page.type('#ctl00_mainContent_txtMobilePassword', "seaknight");
-    await page.click('#ctl00_mainContent_btnMobileLogin');
-    await page.waitForNavigation();
-      console.log('success!2');
-
-    const element = await page.$("#ctl00_leftMenu_dmLeftMenu_gwMyMasterModules_ctl01_lnkGame_0");
-    var text = await page.evaluate(element => element.textContent, element);
-
-    await browser.close();
-    console.log('success!');
-    console.log(text);
-
-})();
-
-
 client.on("message", message => {
     if (message.content[0]== "!") {
         var text = "";
