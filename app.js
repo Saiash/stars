@@ -98,7 +98,7 @@ var incomecalc = function (tech,count,mod,type) {
     if (type == 1) {
       income = Math.round(Math.pow((count+tech)*(0.7+Math.pow(mod,1.35)*0.07)+1,1.6+(tech)/8));
     }
-    if (tech == 0 && count == 0) {
+    if (count == 0) {
       income = 0;
     }
     return income;
@@ -145,8 +145,8 @@ var multiincomcalc = function(string,mod,type) {
     i = 0;
     count = components.length - 1;
     while (i <= count) {
-      var price_1 = Math.round(incomecalc(components[i][0]*1,count_total,mod*1,type*1));
-      var price_2 = Math.round(incomecalc(components[i][0]*1,count_total - components[i][1]*1,mod*1,type*1));
+      var price_1 = Math.round(incomecalc(components[i][0]*1,count_total*1,mod*1,type*1));
+      var price_2 = Math.round(incomecalc(components[i][0]*1,(count_total*1 - components[i][1]*1),mod*1,type*1));
       count_total = count_total - components[i][1]*1;
       income_result += (price_1 - price_2);
       i++;
