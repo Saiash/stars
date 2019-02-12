@@ -62,7 +62,6 @@ client.on("message", message => {
             pices[4] = pices[4].split(':');
             var components = [];
             price[0] = multipricecalc(pices[1],pices[3],pices[5],message);
-            console.log(price[0]);
             income[0] = multiincomcalc(pices[1],pices[4][0],pices[5],message);
             price[1] = multipricecalc(pices[2],pices[3],pices[5],message);
             income[1] = multiincomcalc(pices[2],pices[4][1],pices[5],message);
@@ -126,6 +125,7 @@ var multipricecalc = function(string,mod,type,message) {
         }
         i++;
     }
+  console.log(price);
   return price;
 }
 
