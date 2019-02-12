@@ -110,28 +110,35 @@ var multipricecalc = function(string,mod,type,message) {
     var i = 0;
     var components = [];
     var count_total = 0;
-    components[0] = [];
     var price = 0;
     while (i <= count) {
-        components[0][i] = string[i].split(':');
-        var j = 0;
-        var realcount = 0;
-        while (j <= i) {
-            realcount += components[0][j][1]*1;
-            j++;
-        }
-        console.log(realcount);
+        components[i] = string[i].split(':');
+        count_total += components[i][1]*1;
+        /**
         price += Math.round(pricecalc(components[0][i][0]*1,realcount,mod*1,type*1));
         if (realcount != components[0][i][1]*1) {
             price += -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
-        }
+        }*/
         i++;
     }
-  console.log(price);
-  return price;
+    i = 0;
+    count = components.length - 1;
+    while (i <= count) {
+      var price_1 = Math.round(pricecalc(components[i][0]*1,count_total,mod*1,type*1));
+      var price_2 = Math.round(pricecalc(components[i][0]*1,count_total - components[i][1]*1,mod*1,type*1));
+      console.log(components[i][0]*1 + " " + count_total + ": " + price_1);
+      console.log(components[i][0]*1 + " " + (count_total - components[i][1]*1) + ": " + price_2);
+      var price_result = price_1 - price_2;
+      console.log(price_result);
+      i++;
+    }
+    //console.log(price);
+    return price;
 }
 
-multipricecalc("1:2-2:6","1","1");
+multipricecalc("1:2-2:6-3:1","1","1");
+console.log("second");
+multipricecalc("1:1-2:8","1","1");
 
 var multiincomcalc = function(string,mod,type) {
     string = string.split('-');
