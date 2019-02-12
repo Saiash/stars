@@ -129,6 +129,8 @@ var multipricecalc = function(string,mod,type,message) {
   return price;
 }
 
+var string = "!улучшение /1:2-2:6/2:8-1:1/1/1:1/1";
+
 var multiincomcalc = function(string,mod,type) {
     string = string.split('-');
     var count = string.length - 1;
