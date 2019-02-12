@@ -137,8 +137,8 @@ var multipricecalc = function(string,mod,type,message) {
 }
 
 multipricecalc("1:2-2:6-3:1","1","1");
-console.log("second");
-multipricecalc("1:1-2:8","1","1");
+//console.log("second");
+//multipricecalc("1:1-2:8-3:1","1","1");
 
 var multiincomcalc = function(string,mod,type) {
     string = string.split('-');
