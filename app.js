@@ -109,6 +109,7 @@ var multipricecalc = function(string,mod,type,message) {
     var count = string.length - 1;
     var i = 0;
     var components = [];
+    var count_total = 0;
     components[0] = [];
     var price = 0;
     while (i <= count) {
@@ -119,6 +120,7 @@ var multipricecalc = function(string,mod,type,message) {
             realcount += components[0][j][1]*1;
             j++;
         }
+        console.log(realcount);
         price += Math.round(pricecalc(components[0][i][0]*1,realcount,mod*1,type*1));
         if (realcount != components[0][i][1]*1) {
             price += -pricecalc(components[0][i][0]*1,realcount-components[0][i][1]*1,mod*1,type*1);
@@ -129,7 +131,7 @@ var multipricecalc = function(string,mod,type,message) {
   return price;
 }
 
-var string = "!улучшение /1:2-2:6/2:8-1:1/1/1:1/1";
+multipricecalc("1:2-2:6","1","1");
 
 var multiincomcalc = function(string,mod,type) {
     string = string.split('-');
@@ -154,6 +156,7 @@ var multiincomcalc = function(string,mod,type) {
     }
   return income;
 }
+
 
 
 function throw_dice(times,edges,mod=0) {
