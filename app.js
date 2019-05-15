@@ -17,18 +17,21 @@ setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 220000);
 
+var game = {};
+game.actions = {};
 
 client.on("message", message => {
     if (message.content[0]== "!") {
-        var text = "";
-        if (message.content == '!ход') {
-          fs.writeFile("save.txt", JSON.stringify(game), function(err) {
+        if (message.content.indexOf('!ход') != -1) {
+          var content = message.content;
+          console.log(message.channel.name);
+          fs.writeFile("save.txt", JSON.stringify(content), function(err) {
               if(err) {
                   return console.log(err);
               }
               console.log("The file was saved!");
           }); 
-           text = "команды: !строительство\r\n!улучшение\r\n!отряд\r\n!корабль";
+           var text = "Сохранено";
         }
         if (message.content == '!отряд') {
             text = "Для рассчета стоимости отряда сообщение должно быть следующего формата: \r\n**!отряд /атака/защита/мод**";
