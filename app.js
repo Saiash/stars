@@ -19,10 +19,10 @@ setInterval(() => {
 
 var game = {};
 game.actions = {};
-//game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
-game.actions = {};
+game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
+game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 
 
 client.on("message", message => {
@@ -57,10 +57,19 @@ client.on("message", message => {
         }
       
         if (message.content == '!планета') {
+          if (message.channel.name != "техническая") {
+            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" посмотрели токен планеты");
+          }
           text = game.planettokens[Math.floor(Math.random() * 38)];
         }
-      if (message.content == '!космос') {
-          text = game.planettokens[Math.floor(Math.random() * 38)];
+        if (message.content == '!космос') {
+          if (message.channel.name != "техническая") {
+            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" посмотрели токен космоса");
+          }
+          text = game.spacetokens[Math.floor(Math.random() * 14)];
+        }
+        if (message.content == '!д10') {
+          text = "Результат: "+Math.floor(Math.random() * 9 + 1);
         }
         
         if (text != '') {
