@@ -42,6 +42,8 @@ client.on("message", message => {
           var text = "Сохранено";
           client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" сделали ход");
         }
+      
+      
         if (message.content == '!фаза') {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
@@ -59,21 +61,28 @@ client.on("message", message => {
             }
         }
       
+      
         if (message.content == '!планета') {
           if (message.channel.name != "техническая") {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" посмотрели токен планеты");
           }
           text = game.planettokens[Math.floor(Math.random() * 38)];
         }
+      
+      
         if (message.content == '!космос') {
           if (message.channel.name != "техническая") {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" посмотрели токен космоса");
           }
           text = game.spacetokens[Math.floor(Math.random() * 14)];
         }
+      
+      
         if (message.content == '!д10') {
           text = "Результат: "+Math.floor(Math.random() * 9 + 1);
         }
+      
+      
         if (message.content == '!взять кд') {
           if (message.channel.name != "техническая") {
             //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли карту действий");
@@ -82,14 +91,21 @@ client.on("message", message => {
           console.log(count);
           var rand = Math.floor(Math.random() * count-1);
           text = game.actioncards[rand];
-          game.actioncards.splice(rand,1);
+          //game.actioncards.splice(rand,1);
           fs.writeFile("actioncards.txt", game.actioncards.join('!@#"\n'), function(err) {
               if(err) {
                   return console.log(err);
               }
               console.log("The file was saved!");
           }); 
+          if (game.cards[message.channel.name] == undefined) {
+            game.cards[message.channel.name] = [];
+          }
+          console.log(game.cards[message.channel.name]);
+          game.cards[message.channel.name].push(text);
         }
+      
+      
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
