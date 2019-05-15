@@ -22,6 +22,12 @@ client.on("message", message => {
     if (message.content[0]== "!") {
         var text = "";
         if (message.content == '!ход') {
+          fs.writeFile("save.txt", JSON.stringify(game), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          }); 
            text = "команды: !строительство\r\n!улучшение\r\n!отряд\r\n!корабль";
         }
         if (message.content == '!отряд') {
