@@ -31,6 +31,7 @@ client.on("message", message => {
               }
               console.log("The file was saved!");
           }); 
+          console.log(client.guilds[511595522574778375]);
            var text = "Сохранено";
         }
         if (message.content == '!фаза') {
