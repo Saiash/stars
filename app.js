@@ -23,6 +23,7 @@ game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
+game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#"\n');
 
 
 client.on("message", message => {
@@ -70,6 +71,22 @@ client.on("message", message => {
         }
         if (message.content == '!д10') {
           text = "Результат: "+Math.floor(Math.random() * 9 + 1);
+        }
+        if (message.content == '!взять кд') {
+          if (message.channel.name != "техническая") {
+            //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли карту действий");
+          }
+          var count = game.actioncards.length;
+          console.log(count);
+          var rand = Math.floor(Math.random() * count-1);
+          text = game.actioncards[rand];
+          game.actioncards.splice(rand,1);
+          fs.writeFile("actioncards.txt", JSON.stringify(game.actioncards.join('!@#"\n')), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          }); 
         }
         
         if (text != '') {
