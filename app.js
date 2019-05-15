@@ -121,6 +121,13 @@ client.on("message", message => {
             });
         }
       
+        if (message.content.indexOf('!сбросить кд') != -1) {
+          var text = "";
+          Object.keys(game.cards[message.channel.name]).map(function(name, index) {
+                text +=(index+1)+". "+game.cards[message.channel.name][name]+"\n\n";
+            });
+        }
+      
       
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
