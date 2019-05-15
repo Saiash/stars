@@ -19,7 +19,9 @@ setInterval(() => {
 
 var game = {};
 game.actions = {};
-game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
+//game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
+game.actions = {};
+
 
 client.on("message", message => {
     if (message.content[0]== "!") {
@@ -31,8 +33,9 @@ client.on("message", message => {
               }
               console.log("The file was saved!");
           }); 
-          console.log(client.guilds[511595522574778375]);
-           var text = "Сохранено";
+          var text = "Сохранено";
+          console.log(client.guilds);
+          //client.guilds.get(577853550517026816).channels.get(578119273642197018).send(message.channel.name+" сделали ход");
         }
         if (message.content == '!фаза') {
           var text = "";
