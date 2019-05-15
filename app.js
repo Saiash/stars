@@ -27,6 +27,8 @@ game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#"\n');
 game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 
 game.cards = {};
+game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
+
 
 
 client.on("message", message => {
@@ -103,6 +105,17 @@ client.on("message", message => {
           }
           console.log(game.cards[message.channel.name]);
           game.cards[message.channel.name].push(text);
+          fs.writeFile("cards.txt", JSON.stringify(game.cards), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+        }
+      
+        
+        if (message.content == '!посмотреть кд') {
+          text = game.cards[message.channel.name].join('\n\n');
         }
       
       
@@ -124,7 +137,7 @@ client.on("message", message => {
         }
         
         if (text != '') {
-            text = text.match(/.{1,1900}/g);
+            text = text.match(/(.|\n){1,1900}/g);
             text.forEach(function(element) {
               element = element.split('$#$').join("\r\n");
               message.channel.send(element);
