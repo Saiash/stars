@@ -121,10 +121,16 @@ client.on("message", message => {
             });
         }
       
+      
         if (message.content.indexOf('!сбросить кд') != -1) {
           var text = "";
-          Object.keys(game.cards[message.channel.name]).map(function(name, index) {
-                text +=(index+1)+". "+game.cards[message.channel.name][name]+"\n\n";
+          var num = message.content.match(/(\d+)/ig)[0];
+          game.cards[message.channel.name].splice((num-1),1);
+          fs.writeFile("cards.txt", JSON.stringify(game.cards), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
             });
         }
       
