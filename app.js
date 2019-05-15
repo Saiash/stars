@@ -22,6 +22,8 @@ game.actions = {};
 //game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 game.actions = {};
 
+game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
+
 
 client.on("message", message => {
     if (message.content[0]== "!") {
@@ -54,11 +56,19 @@ client.on("message", message => {
             }
         }
       
-        if (message.content == '!взять кд') {
+        if (message.content == '!планета') {
+          text = game.planettokens[Math.floor(Math.random() * 38)];
+        }
+      if (message.content == '!космос') {
+          text = game.planettokens[Math.floor(Math.random() * 38)];
         }
         
         if (text != '') {
-            message.channel.send(text);
+            text = text.match(/.{1,1900}/g);
+            text.forEach(function(element) {
+              element = element.split('$#$').join("\r\n");
+              message.channel.send(element);
+            });
         }
     }
 })
