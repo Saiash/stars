@@ -21,7 +21,7 @@ setInterval(() => {
 client.on("message", message => {
     if (message.content[0]== "!") {
         var text = "";
-        if (message.content == '!help') {
+        if (message.content == '!ход') {
            text = "команды: !строительство\r\n!улучшение\r\n!отряд\r\n!корабль";
         }
         if (message.content == '!отряд') {
