@@ -26,6 +26,8 @@ game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#"\n');
 game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 
+game.cards = {};
+
 
 client.on("message", message => {
     if (message.content[0]== "!") {
@@ -38,7 +40,6 @@ client.on("message", message => {
               console.log("The file was saved!");
           }); 
           var text = "Сохранено";
-          //console.log(client.guilds.get('577853550517026816'));
           client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" сделали ход");
         }
         if (message.content == '!фаза') {
