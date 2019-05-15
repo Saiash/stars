@@ -24,7 +24,7 @@ game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 client.on("message", message => {
     if (message.content[0]== "!") {
         if (message.content.indexOf('!ход') != -1) {
-          game.actions[message.channel.name] = message.content;
+          game.actions[message.channel.name] = message.content.split("!ход\n").join("").split("!ход").join("");
           fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
               if(err) {
                   return console.log(err);
@@ -36,8 +36,18 @@ client.on("message", message => {
         if (message.content == '!фаза') {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
+              text += "\n"+name+"\n"+game.actions[name];
+            });
+            game.actions = {};
+            fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+            if (text == "") {
+              text = "Нет ни одного хода";
             }
-
         }
         
         if (text != '') {
