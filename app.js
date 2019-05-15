@@ -34,8 +34,8 @@ client.on("message", message => {
               console.log("The file was saved!");
           }); 
           var text = "Сохранено";
-          console.log(client.guilds);
-          //client.guilds.get(577853550517026816).channels.get(578119273642197018).send(message.channel.name+" сделали ход");
+          //console.log(client.guilds.get('577853550517026816'));
+          client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" сделали ход");
         }
         if (message.content == '!фаза') {
           var text = "";
@@ -52,6 +52,9 @@ client.on("message", message => {
             if (text == "") {
               text = "Нет ни одного хода";
             }
+        }
+      
+        if (message.content == '!взять кд') {
         }
         
         if (text != '') {
