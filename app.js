@@ -115,7 +115,10 @@ client.on("message", message => {
       
         
         if (message.content == '!посмотреть кд') {
-          text = game.cards[message.channel.name].join('\n\n');
+          var text = "";
+          Object.keys(game.cards[message.channel.name]).map(function(name, index) {
+                text +=(index+1)+". "+game.cards[message.channel.name][name]+"\n\n";
+            });
         }
       
       
