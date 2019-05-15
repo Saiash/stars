@@ -21,19 +21,23 @@ var game = {};
 game.actions = {};
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 
-
 client.on("message", message => {
     if (message.content[0]== "!") {
         if (message.content.indexOf('!ход') != -1) {
-          game.actions. = message.content;
-          console.log(message.channel.name);
-          fs.writeFile("actions.txt", JSON.stringify(content), function(err) {
+          game.actions[message.channel.name] = message.content;
+          fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
               if(err) {
                   return console.log(err);
               }
               console.log("The file was saved!");
           }); 
            var text = "Сохранено";
+        }
+        if (message.content == '!фаза') {
+          var text = "";
+            Object.keys(game.actions).map(function(name, index) {
+            }
+
         }
         
         if (text != '') {
