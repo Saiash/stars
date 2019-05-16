@@ -30,6 +30,10 @@ game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
 game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+game.quests = {};
+game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
+game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
+
 
 
 client.on("message", message => {
@@ -164,6 +168,40 @@ client.on("message", message => {
             });
         }
       
+      if (message.content == '!взять задание') {
+          if (message.channel.name != "техническая") {
+            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли секретное задание");
+          }
+          var count = game.questscards.length;
+          console.log(count);
+          var rand = Math.floor(Math.random() * count-1);
+          text = game.questscards[rand];
+          game.questscards.splice(rand,1);
+          fs.writeFile("law.txt", game.questscards.join('!@#'), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          }); 
+          if (game.quests[message.channel.name] == undefined) {
+            game.quests[message.channel.name] = [];
+          }
+          console.log(game.quests[message.channel.name]);
+          game.quests[message.channel.name].push(text);
+          fs.writeFile("quests.txt", JSON.stringify(game.quests), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+        }
+      
+      if (message.content == '!посмотреть задания') {
+          var text = "";
+          Object.keys(game.quests[message.channel.name]).map(function(name, index) {
+                text +=(index+1)+". "+game.quests[message.channel.name][name]+"\n\n";
+            });
+        }
       
       if (message.content == '!посмотреть законы') {
           var text = "";
