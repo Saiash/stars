@@ -24,12 +24,12 @@ game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#"\n');
-game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
+game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#\n');
 
 game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
-game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+//game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -145,7 +145,7 @@ client.on("message", message => {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
           var count = game.lawcards.length;
-          console.log(count);
+          console.log(game.lawcards);
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
           game.lawcards.splice(rand,1);
