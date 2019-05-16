@@ -29,7 +29,7 @@ game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
-game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+//game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -142,8 +142,9 @@ client.on("message", message => {
       
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
-            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
+            //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
+          console.log(game.lawcards);
           var count = game.lawcards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
