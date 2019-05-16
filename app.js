@@ -27,9 +27,9 @@ game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#\n');
 game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#\n');
 
 game.cards = {};
-game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
+//game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
-game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+//game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -96,10 +96,11 @@ client.on("message", message => {
           }
           var count = game.actioncards.length;
           console.log(count);
+          console.log(game.actioncards);
           var rand = Math.floor(Math.random() * count-1);
           text = game.actioncards[rand];
           game.actioncards.splice(rand,1);
-          fs.writeFile("actioncards.txt", game.actioncards.join('!@#"\n'), function(err) {
+          fs.writeFile("actioncards.txt", game.actioncards.join('!@#\n'), function(err) {
               if(err) {
                   return console.log(err);
               }
@@ -148,7 +149,7 @@ client.on("message", message => {
           var count = game.lawcards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
-          fs.writeFile("law.txt", game.lawcards.join('!@#"\n'), function(err) {
+          fs.writeFile("law.txt", game.lawcards.join('!@#\n'), function(err) {
               if(err) {
                   return console.log(err);
               }
