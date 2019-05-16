@@ -29,7 +29,7 @@ game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
-//game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -120,10 +120,14 @@ client.on("message", message => {
       
         
         if (message.content == '!посмотреть кд') {
-          var text = "Пусто";
+          var text = "";
+          if (game.cards[message.channel.name] != undefined) {
           Object.keys(game.cards[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.cards[message.channel.name][name]+"\n\n";
             });
+            } else {
+            text = "пусто";
+          }
         }
       
       
@@ -142,7 +146,7 @@ client.on("message", message => {
       
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
-            //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
+            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
           console.log(game.lawcards);
           var count = game.lawcards.length;
@@ -197,17 +201,25 @@ client.on("message", message => {
         }
       
       if (message.content == '!посмотреть задания') {
-          var text = "Пусто";
+          var text = "";
+          if (game.quests[message.channel.name] != undefined) {
           Object.keys(game.quests[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.quests[message.channel.name][name]+"\n\n";
             });
+            } else {
+            text = "пусто";
+          }
         }
       
       if (message.content == '!посмотреть законы') {
-          var text = "Пусто";
+          var text = "";
+          if (game.laws[message.channel.name] != undefined) {
           Object.keys(game.laws[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.laws[message.channel.name][name]+"\n\n";
             });
+          } else {
+            text = "пусто";
+          }
         }
       
       
@@ -225,6 +237,9 @@ client.on("message", message => {
       
         
         if (text != '') {
+            if (text == undefined) {
+              text = "неправильная команда";
+            }
             text = text.match(/(.|\n){1,1900}/g);
             text.forEach(function(element) {
               element = element.split('$#$').join("\r\n");
