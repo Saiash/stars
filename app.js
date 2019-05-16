@@ -97,6 +97,7 @@ client.on("message", message => {
           var count = game.actioncards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.actioncards[rand];
+          console.log(text);
           game.actioncards.splice(rand,1);
           fs.writeFile("actioncards.txt", game.actioncards.join('!@#\n'), function(err) {
               if(err) {
@@ -119,7 +120,7 @@ client.on("message", message => {
       
         
         if (message.content == '!посмотреть кд') {
-          var text = "";
+          var text = "Пусто";
           Object.keys(game.cards[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.cards[message.channel.name][name]+"\n\n";
             });
@@ -195,14 +196,14 @@ client.on("message", message => {
         }
       
       if (message.content == '!посмотреть задания') {
-          var text = "";
+          var text = "Пусто";
           Object.keys(game.quests[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.quests[message.channel.name][name]+"\n\n";
             });
         }
       
       if (message.content == '!посмотреть законы') {
-          var text = "";
+          var text = "Пусто";
           Object.keys(game.laws[message.channel.name]).map(function(name, index) {
                 text +=(index+1)+". "+game.laws[message.channel.name][name]+"\n\n";
             });
