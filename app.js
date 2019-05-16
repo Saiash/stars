@@ -24,12 +24,12 @@ game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#\n');
-game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#\n');
+game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 
 game.cards = {};
-//game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
+game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
-//game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -95,8 +95,6 @@ client.on("message", message => {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли карту действий");
           }
           var count = game.actioncards.length;
-          console.log(count);
-          console.log(game.actioncards);
           var rand = Math.floor(Math.random() * count-1);
           text = game.actioncards[rand];
           game.actioncards.splice(rand,1);
@@ -142,14 +140,14 @@ client.on("message", message => {
       
       
         if (message.content == '!взять закон') {
-                              console.log(game.lawcards);
           if (message.channel.name != "техническая") {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
           var count = game.lawcards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
-          fs.writeFile("law.txt", game.lawcards.join('!@#\n'), function(err) {
+          console.log(text);
+          fs.writeFile("law.txt", game.lawcards.join('!@#"\n'), function(err) {
               if(err) {
                   return console.log(err);
               }
