@@ -54,7 +54,7 @@ client.on("message", message => {
         if (message.content == '!фаза') {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
-              text += "\n"+name+"\n"+game.actions[name];
+              text += "\n"+name+"\n"+game.actions[name]+"\n";
             });
             game.actions = {};
             fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
