@@ -73,7 +73,8 @@ client.on("message", message => {
           if (message.channel.name != "техническая") {
             client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" посмотрели токен планеты");
           }
-          text = game.planettokens[Math.floor(Math.random() * 38)];
+          var random = Math.floor(Math.random() * 38);
+          text = game.planettokens[4];
         }
       
       
