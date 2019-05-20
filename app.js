@@ -51,6 +51,17 @@ client.on("message", message => {
           client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" сделали ход");
         }
       
+      if (message.content.indexOf('!советники') != -1) {
+          game.actions[message.channel.name] = Date.now()+message.content.split("!советники\n").join("").split("!советники").join("");
+          fs.writeFile("diplomacy.txt", JSON.stringify(game.actions), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          }); 
+          var text = "Сохранено";
+        }
+      
       
         if (message.content == '!фаза') {
           var text = "";
@@ -120,6 +131,17 @@ client.on("message", message => {
             });
         }
       
+        if (message.content.indexOf('!добавить кд') != -1) {
+          text = message.content.split("!добавить кд ").join("");
+          game.cards[message.channel.name].push(text);
+          fs.writeFile("cards.txt", JSON.stringify(game.cards), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+        }
+
         
         if (message.content == '!посмотреть кд') {
           var text = "";
@@ -148,7 +170,7 @@ client.on("message", message => {
       
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
-            //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
+            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
           console.log(game.lawcards);
           var count = game.lawcards.length;
@@ -184,7 +206,7 @@ client.on("message", message => {
           var rand = Math.floor(Math.random() * count-1);
           text = game.questscards[rand];
           game.questscards.splice(rand,1);
-          fs.writeFile("law.txt", game.questscards.join('!@#'), function(err) {
+          fs.writeFile("questslist.txt", game.questscards.join('!@#'), function(err) {
               if(err) {
                   return console.log(err);
               }
