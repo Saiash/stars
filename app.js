@@ -148,13 +148,14 @@ client.on("message", message => {
       
         if (message.content == '!взять закон') {
           if (message.channel.name != "техническая") {
-            client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
+            //client.guilds.get('577853550517026816').channels.get('578119273642197018').send(message.channel.name+" взяли закон");
           }
           console.log(game.lawcards);
           var count = game.lawcards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
           console.log(text);
+          //game.lawcards.splice(rand,1);
           fs.writeFile("law.txt", game.lawcards.join('!@#"\n'), function(err) {
               if(err) {
                   return console.log(err);
