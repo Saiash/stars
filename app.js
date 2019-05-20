@@ -22,6 +22,12 @@ var game = {};
 game.actions = {};
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 
+game.diplomacy = {};
+game.diplomacy = JSON.parse(fs.readFileSync('diplomacy.txt','utf8'));
+
+game.usecd = {};
+game.usecd = JSON.parse(fs.readFileSync('usecd.txt','utf8'));
+
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#\n');
@@ -52,14 +58,59 @@ client.on("message", message => {
         }
       
       if (message.content.indexOf('!советники') != -1) {
-          game.actions[message.channel.name] = Date.now()+message.content.split("!советники\n").join("").split("!советники").join("");
-          fs.writeFile("diplomacy.txt", JSON.stringify(game.actions), function(err) {
+          game.diplomacy[message.channel.name] = new Date(Date.now())+message.content.split("!советники\n").join("").split("!советники").join("");
+          fs.writeFile("diplomacy.txt", JSON.stringify(game.diplomacy), function(err) {
               if(err) {
                   return console.log(err);
               }
               console.log("The file was saved!");
           }); 
           var text = "Сохранено";
+        }
+      
+      if (message.content.indexOf('!сыграть-кд') != -1) {
+          game.usecd[message.channel.name] = new Date(Date.now())+message.content.split("!сыграть-кд\n").join("").split("!сыграть-кд").join("");
+          fs.writeFile("usecd.txt", JSON.stringify(game.usecd), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+          }); 
+          var text = "Сохранено";
+        }
+      
+      if (message.content == '!кд-фаза') {
+          var text = "";
+            Object.keys(game.usecd).map(function(name, index) {
+              text += "\n"+name+"\n"+game.usecd[name]+"\n";
+            });
+            game.usecd = {};
+            fs.writeFile("usecd.txt", JSON.stringify(game.usecd), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+            if (text == "") {
+              text = "Нет ни одного хода";
+            }
+        }
+      
+      if (message.content == '!фаза-советники') {
+          var text = "";
+            Object.keys(game.diplomacy).map(function(name, index) {
+              text += "\n"+name+"\n"+game.diplomacy[name]+"\n";
+            });
+            game.diplomacy = {};
+            fs.writeFile("diplomacy.txt", JSON.stringify(game.diplomacy), function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+              console.log("The file was saved!");
+            });
+            if (text == "") {
+              text = "Нет ни одного хода";
+            }
         }
       
       
