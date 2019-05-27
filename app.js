@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const fs = require('fs'); 
 const puppeteer = require('puppeteer'); 
 
-var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XOGtbw.IWMf_-y2qz4oZP9I2NMml62dak4");
+var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XOGtbw.IWMf_-y2qz4oZP9I2NMml62dak4"); 
  
 
 const http = require('http');
