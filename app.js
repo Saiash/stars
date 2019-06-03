@@ -44,7 +44,6 @@ game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
 game.statistic = {};
 game.statistic = JSON.parse(fs.readFileSync('statistic.txt','utf8'));
 
-
 client.on("message", message => {
     if (message.content[0]== "!") {
         if (message.content.indexOf('!ход') != -1) {
@@ -160,9 +159,9 @@ client.on("message", message => {
       
         if (message.content == '!статистика') {
           text = "";
+            console.log(game.statistic);
           Object.keys(game.statistic).map(function(name, index) {
             if (name != "техническая") {
-              console.log(name);
               text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
             }
           });
