@@ -127,17 +127,17 @@ client.on("message", message => {
                 game.statistic[name].fleet = 3;
                 game.statistic[name].vp = 0;
               }
-              if (game.actions[name].match(/\км(.|..)==(\d)/ig) != null ) {
-                game.statistic[name].cm = game.actions[name].match(/\км(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              if (game.actions[name].match(/(км|км.|км..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+                game.statistic[name].cm = game.actions[name].match(/(км|км.|км..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/\товар(.|..)==(\d)/ig) != null ) {
-                game.statistic[name].goods = game.actions[name].match(/\товар(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              if (game.actions[name].match(/(товар|товар.|товар..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+                game.statistic[name].goods = game.actions[name].match(/(товар|товар.|товар..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/\лимит флота(.|..)==(\d)/ig) != null ) {
-                game.statistic[name].fleet = game.actions[name].match(/\лимит флота(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              if (game.actions[name].match(/\лимит флот(.|..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+                game.statistic[name].fleet = game.actions[name].match(/\лимит флота(.|..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/\ПО(.|..)==(\d)/ig) != null ) {
-                game.statistic[name].vp = game.actions[name].match(/\ПО(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              if (game.actions[name].match(/\ПО(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+                game.statistic[name].vp = game.actions[name].match(/\ПО(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
             });
             fs.writeFile("statistic.txt", JSON.stringify(game.statistic), function(err) {
@@ -161,7 +161,9 @@ client.on("message", message => {
         if (message.content == '!статистика') {
           text = "";
           Object.keys(game.statistic).map(function(name, index) {
-            text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
+            if (name != "техническая") {
+              text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
+            }
           });
         }
       
