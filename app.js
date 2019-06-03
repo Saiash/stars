@@ -127,7 +127,18 @@ client.on("message", message => {
                 game.statistic[name].fleet = 3;
                 game.statistic[name].vp = 0;
               }
-              game.statistic[message.channel.name].cm = 1;
+              if (game.actions[name].match(/\км(.|..)==(\d)/ig) != null ) {
+                game.statistic[name].cm = game.actions[name].match(/\км(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              }
+              if (game.actions[name].match(/\товар(.|..)==(\d)/ig) != null ) {
+                game.statistic[name].goods = game.actions[name].match(/\товар(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              }
+              if (game.actions[name].match(/\лимит флота(.|..)==(\d)/ig) != null ) {
+                game.statistic[name].fleet = game.actions[name].match(/\лимит флота(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              }
+              if (game.actions[name].match(/\ПО(.|..)==(\d)/ig) != null ) {
+                game.statistic[name].vp = game.actions[name].match(/\ПО(.|..)==(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
+              }
             });
             fs.writeFile("statistic.txt", JSON.stringify(game.statistic), function(err) {
                 if(err) {
