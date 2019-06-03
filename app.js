@@ -32,11 +32,11 @@ game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#\n');
 game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
-
 game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
 game.laws = {};
 game.laws = JSON.parse(fs.readFileSync('laws.txt','utf8'));
+
 game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
@@ -260,7 +260,7 @@ client.on("message", message => {
           var count = game.lawcards.length;
           var rand = Math.floor(Math.random() * count-1);
           text = game.lawcards[rand];
-          //game.lawcards.splice(rand,1);
+          game.lawcards.splice(rand,1);
           fs.writeFile("law.txt", game.lawcards.join('!@#"\n'), function(err) {
               if(err) {
                   return console.log(err);
