@@ -120,12 +120,12 @@ client.on("message", message => {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
               text += "\n**"+name+"**\n"+game.actions[name]+"\n";
-              if (game.statistic[message.channel.name] == undefined) {
-                game.statistic[message.channel.name] = {};
-                game.statistic[message.channel.name].cm = 5;
-                game.statistic[message.channel.name].goods = 6;
-                game.statistic[message.channel.name].fleet = 3;
-                game.statistic[message.channel.name].vp = 3;
+              if (game.statistic[name] == undefined) {
+                game.statistic[name] = {};
+                game.statistic[name].cm = 5;
+                game.statistic[name].goods = 6;
+                game.statistic[name].fleet = 3;
+                game.statistic[name].vp = 0;
               }
               game.statistic[message.channel.name].cm = 1;
             });
@@ -150,7 +150,7 @@ client.on("message", message => {
         if (message.content == '!статистика') {
           text = "";
           Object.keys(game.statistic).map(function(name, index) {
-            text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name]+"\n";
+            text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
           });
         }
       
