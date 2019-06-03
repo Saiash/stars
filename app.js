@@ -21,7 +21,6 @@ setInterval(() => {
 var game = {};
 game.actions = {};
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
-console.log(game);
 
 game.diplomacy = {};
 game.diplomacy = JSON.parse(fs.readFileSync('diplomacy.txt','utf8'));
@@ -44,9 +43,6 @@ game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
 
 game.statistic = {};
 game.statistic = JSON.parse(fs.readFileSync('statistic.txt','utf8'));
-
-
-
 
 
 client.on("message", message => {
@@ -124,7 +120,21 @@ client.on("message", message => {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
               text += "\n**"+name+"**\n"+game.actions[name]+"\n";
+              if (game.statistic[message.channel.name] == undefined) {
+                game.statistic[message.channel.name] = {};
+                game.statistic[message.channel.name].cm = 5;
+                game.statistic[message.channel.name].goods = 6;
+                game.statistic[message.channel.name].fleet = 3;
+                game.statistic[message.channel.name].vp = 3;
+              }
+              game.statistic[message.channel.name].cm = 1;
             });
+            fs.writeFile("statistic.txt", JSON.stringify(game.statistic), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            }); 
             game.actions = {};
             fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
               if(err) {
@@ -137,6 +147,12 @@ client.on("message", message => {
             }
         }
       
+        if (message.content == '!статистика') {
+          text = "";
+          Object.keys(game.statistic).map(function(name, index) {
+            text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name]+"\n";
+          });
+        }
       
         if (message.content == '!планета') {
           if (message.channel.name != "техническая") {
