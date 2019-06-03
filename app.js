@@ -42,6 +42,11 @@ game.quests = {};
 game.quests = JSON.parse(fs.readFileSync('quests.txt','utf8'));
 game.questscards = fs.readFileSync('questslist.txt','utf8').split('!@#');
 
+game.statistic = {};
+game.statistic = JSON.parse(fs.readFileSync('statistic.txt','utf8'));
+
+
+
 
 
 client.on("message", message => {
@@ -83,7 +88,7 @@ client.on("message", message => {
       if (message.content == '!кд-фаза') {
           var text = "";
             Object.keys(game.usecd).map(function(name, index) {
-              text += "\n"+name+"\n"+game.usecd[name]+"\n";
+              text += "\n**"+name+"**\n"+game.usecd[name]+"\n";
             });
             game.usecd = {};
             fs.writeFile("usecd.txt", JSON.stringify(game.usecd), function(err) {
@@ -100,7 +105,7 @@ client.on("message", message => {
       if (message.content == '!фаза-советники') {
           var text = "";
             Object.keys(game.diplomacy).map(function(name, index) {
-              text += "\n"+name+"\n"+game.diplomacy[name]+"\n";
+              text += "\n**"+name+"**\n"+game.diplomacy[name]+"\n";
             });
             game.diplomacy = {};
             fs.writeFile("diplomacy.txt", JSON.stringify(game.diplomacy), function(err) {
@@ -118,7 +123,7 @@ client.on("message", message => {
         if (message.content == '!фаза') {
           var text = "";
             Object.keys(game.actions).map(function(name, index) {
-              text += "\n"+name+"\n"+game.actions[name]+"\n";
+              text += "\n**"+name+"**\n"+game.actions[name]+"\n";
             });
             game.actions = {};
             fs.writeFile("actions.txt", JSON.stringify(game.actions), function(err) {
