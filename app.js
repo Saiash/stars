@@ -57,12 +57,12 @@ client.on("message", message => {
           var text = "Сохранено";
           var names = [];
           Object.keys(game.statistic).map(function(name, index) {
-              if (game.actions[name] == undefined) {
+              if (game.actions[name] == undefined && name != "техническая") {
                 names.push(name);
               }
             });
-          names = names.join
-          client.guilds.get('583729759851249681').channels.get('585045600588922903').send(message.channel.name+" сделали ход");
+          names = names.join(', ');
+          client.guilds.get('583729759851249681').channels.get('585045600588922903').send(message.channel.name+" сделали ход. Остались: " + names);
         }
       
       if (message.content.indexOf('!советники') != -1) {
@@ -174,20 +174,22 @@ client.on("message", message => {
           });
         }
       
-        if (message.content == '!планета') {
+        if (message.content.indexOf('!планета') != -1) {
+          var planet_name = message.content.split("!планета")[1];
           if (message.channel.name != "техническая") {
             client.guilds.get('583729759851249681').channels.get('585045600588922903').send(message.channel.name+" посмотрели токен планеты");
           }
           var random = Math.floor(Math.random() * 38);
-          text = game.planettokens[random];
+          text = "**"+planet_name+"**\n"+game.planettokens[random];
         }
       
       
-        if (message.content == '!космос') {
+        if (message.content.indexOf('!космос') != -1) {
+          var sector_name = message.content.split("!космос")[1];
           if (message.channel.name != "техническая") {
             client.guilds.get('583729759851249681').channels.get('585045600588922903').send(message.channel.name+" посмотрели токен космоса");
           }
-          text = game.spacetokens[Math.floor(Math.random() * 14)];
+          text = "**"+sector_name+"**\n"+game.spacetokens[Math.floor(Math.random() * 14)];
         }
       
       
