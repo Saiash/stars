@@ -55,6 +55,13 @@ client.on("message", message => {
               console.log("The file was saved!");
           }); 
           var text = "Сохранено";
+          var names = [];
+          Object.keys(game.statistic).map(function(name, index) {
+              if (game.actions[name] == undefined) {
+                names.push(name);
+              }
+            });
+          names = names.join
           client.guilds.get('583729759851249681').channels.get('585045600588922903').send(message.channel.name+" сделали ход");
         }
       
