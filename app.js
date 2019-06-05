@@ -352,7 +352,7 @@ client.on("message", message => {
         
         if (text != '') {
             if (text == undefined) {
-              text = "Exterminate!";
+              text = "Перестаньте!";
               console.log(message.content);
             }
             text = text.match(/(.|\n){1,1900}/g);
