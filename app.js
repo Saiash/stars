@@ -58,7 +58,7 @@ client.on("message", message => {
           var text = "Сохранено";
           var names = [];
           Object.keys(game.statistic).map(function(name, index) {
-              if (game.actions[name] == undefined && name != "техническая") {
+              if (game.actions[name] == undefined && name != "техническая" && name != "архив") {
                 names.push(name);
               }
             });
@@ -169,7 +169,7 @@ client.on("message", message => {
           text = "";
             console.log(game.statistic);
           Object.keys(game.statistic).map(function(name, index) {
-            if (name != "техническая") {
+            if (name != "техническая" && name != "архив") {
               text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
             }
           });
