@@ -198,6 +198,10 @@ client.on("message", message => {
           text = "Результат: "+Math.floor(Math.random() * 9 + 1);
         }
       
+      if (message.content == '!тест') {
+          text = "<button>";
+        }
+      
       
         if (message.content == '!взять кд') {
           if (message.channel.name != "техническая") {
