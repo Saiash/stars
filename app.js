@@ -169,7 +169,7 @@ client.on("message", message => {
           text = "";
             console.log(game.statistic);
           Object.keys(game.statistic).map(function(name, index) {
-            if (name != "техническая" && name != "архив") {
+            if (name != "техническая" && name != "архив" && name != "логи") {
               text += "\n**"+name+"**\nКомандных маркеров: "+game.statistic[name].cm+", Товаров: "+game.statistic[name].goods+", Законов: "+game.laws[name].length+", Лимит флота: "+game.statistic[name].fleet+", ПО: "+game.statistic[name].vp+", КД: "+game.cards[name].length+"\n";
             }
           });
