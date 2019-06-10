@@ -58,7 +58,7 @@ client.on("message", message => {
           var text = "Сохранено";
           var names = [];
           Object.keys(game.statistic).map(function(name, index) {
-              if (game.actions[name] == undefined && name != "техническая" && name != "архив") {
+              if (game.actions[name] == undefined && name != "техническая" && name != "архив"  && name != "логи") {
                 names.push(name);
               }
             });
