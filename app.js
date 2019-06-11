@@ -18,7 +18,7 @@ setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 220000);  
 
-var game = {};
+var game = {}; 
 game.actions = {};
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 console.log(game);
