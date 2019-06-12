@@ -21,7 +21,7 @@ setInterval(() => {
 var game = {}; 
 game.actions = {};
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
-console.log(game);
+console.log(game); 
 
 game.diplomacy = {};
 game.diplomacy = JSON.parse(fs.readFileSync('diplomacy.txt','utf8'));
