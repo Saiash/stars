@@ -134,16 +134,16 @@ client.on("message", message => {
                 game.statistic[name].fleet = 3;
                 game.statistic[name].vp = 0;
               }
-              if (game.actions[name].match(/(км|км.|км..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+              if (game.actions[name].match(/(км|км.|км..)(=|==| =| = | ==| == |== |= )(\d|\d\d)/ig) != null ) {
                 game.statistic[name].cm = game.actions[name].match(/(км|км.|км..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/(товар|товар.|товар..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+              if (game.actions[name].match(/(товар|товар.|товар..)(=|==| =| = | ==| == |== |= )(\d|\d\d)/ig) != null ) {
                 game.statistic[name].goods = game.actions[name].match(/(товар|товар.|товар..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/\лимит флот(.|..)(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+              if (game.actions[name].match(/\лимит флот(.|..)(=|==| =| = | ==| == |== |= )(\d|\d\d)/ig) != null ) {
                 game.statistic[name].fleet = game.actions[name].match(/\лимит флота(.|..)(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
-              if (game.actions[name].match(/\ПО(=|==| =| = | ==| == |== |= )(\d)/ig) != null ) {
+              if (game.actions[name].match(/\ПО(=|==| =| = | ==| == |== |= )(\d|\d\d)/ig) != null ) {
                 game.statistic[name].vp = game.actions[name].match(/\ПО(=|==| =| = | ==| == |== |= )(\d)/ig).slice(-1)[0].match(/(\d|\d\d)/ig);
               }
             });
