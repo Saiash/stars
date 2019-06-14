@@ -32,6 +32,7 @@ game.usecd = JSON.parse(fs.readFileSync('usecd.txt','utf8'));
 game.planettokens = fs.readFileSync('planets.txt','utf8').split('\n');
 game.spacetokens = fs.readFileSync('space.txt','utf8').split('\n');
 game.actioncards = fs.readFileSync('actioncards.txt','utf8').split('!@#\n');
+
 game.lawcards = fs.readFileSync('law.txt','utf8').split('!@#"\n');
 game.cards = {};
 game.cards = JSON.parse(fs.readFileSync('cards.txt','utf8'));
