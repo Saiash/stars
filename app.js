@@ -19,7 +19,7 @@ setInterval(() => {
 }, 220000);  
 
 var game = {}; 
-game.actions = {};
+game.actions = {}; 
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
 console.log(game);   
 
