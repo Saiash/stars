@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const fs = require('fs');  
 //const puppeteer = require('puppeteer'); 
 
-var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XQ0MJw.QPjcI-YRi26u-A5Lhyal5225PyY");  
- 
+var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XQ0ttA.mqFYzJbciRNQgc4JmNgMTj_Zv7U");  
+console.log(login);
 
 const http = require('http');
 const express = require('express'); 
@@ -21,7 +21,6 @@ setInterval(() => {
 var game = {};  
 game.actions = {}; 
 game.actions = JSON.parse(fs.readFileSync('actions.txt','utf8'));
-console.log(game);     
 
 game.diplomacy = {};
 game.diplomacy = JSON.parse(fs.readFileSync('diplomacy.txt','utf8'));
