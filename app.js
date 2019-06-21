@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const fs = require('fs');  
 //const puppeteer = require('puppeteer'); 
 
-var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XQC2-g.cPRoIW2pwrdE4TRHSRwkA4Gp2Mg"); 
+var login = client.login("NTIwNTg4MzU2MTY2NDgzOTc4.XQ0MJw.QPjcI-YRi26u-A5Lhyal5225PyY");  
  
 
 const http = require('http');
@@ -13,7 +13,7 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendStatus(200);   
 });  
-app.listen(process.env.PORT);  
+app.listen(process.env.PORT);   
 setInterval(() => { 
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 220000);  
